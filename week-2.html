@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Workbook: Week 2</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Knewave&family=Mynerve&family=Rubik+Pixels&family=Rubik+Spray+Paint&display=swap" rel="stylesheet">
+        <style>
+            body{
+            background-image: url(media/paper.jpg);
+            }
+            h1{
+                font-family: "Barriecito";
+                font-size: 100px;
+                font-weight: 600;
+                font-style: normal;
+            }
+            h2{
+                font-family: "Barriecito";
+                font-size: 48px;
+                font-weight: 400;
+                font-style: normal;
+            }
+            h3{
+                font-family: "Knewave";
+                font-size: 24px;
+                font-weight: 200;
+                font-style: normal;
+            }
+            body{
+                font-family: "Mynerve";
+                font-size: 16px;
+                font-weight: 400;
+                font-style: normal;
+            }
+            
+            img{
+                width: 100%;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent;
+                padding: 0.5rem 0.5rem;
+                margin: .5rem .25rem .25rem;
+                color: #41403E;
+                outline: none;
+                box-shadow: 1em 1.5em 1.5em -1em rgba(0, 0, 0, 0.5);
+                border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+                box-sizing: border-box;
+                border: solid 0.1em #4140344E;
+                width: 300px;
+                height: fit-content;
+                max-width: 99%;
+                overflow: hidden;
+            }
+            video{
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent;
+                padding: 0.5rem 0.5rem;
+                margin: .5rem .25rem .25rem;
+                color: #41403E;
+                outline: none;
+                box-shadow: 1em 1.5em 1.5em -1em rgba(0, 0, 0, 0.5);
+                border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+                box-sizing: border-box;
+                border: solid 0.1em #4140344E;
+                width:fit-content;
+                max-width: 70%;
+                overflow: hidden;
+            }
+            .grid-container{
+                display: flex;
+                position: inherit;
+                display: grid;
+                width: 80%;
+                height: 300px;
+                margin: 10%;
+                object-fit: cover;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-gap: 10px;
+            }
+            a {
+                color: red;
+                text-decoration: none;}
+            a:hover {
+                background-color: red;
+                color: white;
+                text-decoration: none;
+            }
+            button {
+                border-radius: 30px;
+                border-color: brown;
+                height: fit-content;
+                padding: 10px;
+                background-color: pink;
+            }
+            figure {
+                align-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <button><a href="contents.html">Home</a></button>
+        <h1>WEEK 2</h1>
+
+        <h2>Hunt'n'gather</h2>
+        <h3>Web-PAGES & Web-APPS</h3>
+        <p>Find 3 examples of noteworthy WEB-PAGES or WEB-APPS [& wot is the difference?].</p>
+        <figure><a href="https://peteroravec.com/"><img src="media/peter.jpg" alt=""></a>
+            <figcaption>A fully playable gamified portfolio of a front-end developer</figcaption>
+        </figure>
+        <figure style="position: absolute;left: 35vw; top: 45vw"><a href="https://hogwild.uk/"><img src="media/hog.jpg" alt=""></a>
+            <figcaption>The sites seem to have no connection to each other</figcaption>
+        </figure>
+        <figure style="position: absolute;left: 70vw;top: 40vw;"><a href="https://pillow-list.vercel.app/"><img src="media/large.jpg" alt=""></a>
+            <figcaption>Random, idle, brainless.</figcaption>
+        </figure>
+        
+        <h2>Interactivites</h2>
+        <h3>ACT_01: Paper Prototyping</h3>
+        <figure>
+            <video controls poster="media/crazy8s-walkthrough.jpg" loop style="transform: rotate(2deg);"> <source src="media/crazy8-walkthrough.mp4" type="video/mp4"></source></video>
+            <figcaption style="padding-top: 1em;transform: rotate(2deg);">^ Video walkthrough of Crazy 8 Paper Prototype, tested by a peer.</figcaption>
+        </figure>
+        <h3>ACT_02: HTML Relay</h3>
+        <div class="grid-container">
+        <figure>
+            <img src="media/html-relay_reference.jpg" alt="Picture reference of what our page should look like">
+            <figcaption>Picture reference of what our page should look like</figcaption>
+        </figure>
+        <figure>
+            <img src="media/html-relay_result.jpg" alt="Our completed HTML tag sequence">
+            <figcaption>Our completed HTML tag sequence</figcaption>
+        </figure>
+        <figure>
+            <img src="media/html-tag-relay.jpg" alt="Inputed into HTML">
+            <figcaption>It was mostly correct, however we struggled to have the two figures side by side, as the caption would always be in the wrong position.<br>
+                <br>(as demonstrated here, I've learnt how to achieve that by using < figure> tags inside a div!)
+            </figcaption>
+        </figure>
+        </div>
+        
+        <h2>Homework</h2>
+        <h3>Ideas into Wireframes</h3>
+        <p>Here, I applied a horizontal scroll layout using div gallery, but when combined with the already applied 'paper prototype' css styling, the images became stretched.</p>
+        <figure><img src="media/w2_vscode-fail.jpg" alt=""><figcaption>Original image gallery with distorted images</figcaption></figure>
+        <div class="gallery2">
+            <div class="gallery-item"><img src="media/wireframe_sketch-1.jpg" alt="">
+                <div class="caption">Landing page wireframe sketch based on one of my Crazy 8s.</div>
+            </div>
+            <div class="gallery-item"><img src="media/wireframe_sketch-2.jpg" alt="">
+                <div class="caption">Landing page of a new concept "what's in my bag".</div>
+            </div>
+            <div class="gallery-item"><img src="media/fluid-design.jpg" alt="">
+                <div class="caption">FLUID DESIGN: Mobile wireframe sketch of "what's in my bag".</div>
+            </div>
+        </div>
+        <h3>Storyboarding</h3>
+        <p>Using Figma, I produced simple storyboards to map out the visual proression of my workbook site.</p>
+        <div class="gallery">
+            <div class="gallery-item"><img src="media/wireframes-figma.jpg" alt="Figma wireframes">
+                <div class="caption">The first flow shows an initial concept I had where the bag would 'spill onto the floor' to reveal all the items inside, but I decided it would be too difficult to execute at my technical level.</div>
+            </div>
+            <div class="gallery-item"><img src="media/wireframe-1.jpg" alt=""></div>
+            <div class="gallery-item"><img src="media/wireframe-2.jpg" alt=""></div>
+            <div class="gallery-item"><img src="media/wireframe-3.jpg" alt=""></div>
+            <div class="gallery-item"><img src="media/wireframe-3-1.jpg" alt=""></div>
+        </div>
+        <button><a href="contents.html">Back to ALL ITEMS</a></button>
+    </body>
+</html>
