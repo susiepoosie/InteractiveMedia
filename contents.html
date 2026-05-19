@@ -3,6 +3,15 @@
 <head>
     <title>Contents of student's bag</title>
     <style>
+        div {
+            display: block;
+            unicode-bidi: isolate;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body{
             background-image: url(media/contents-bg.jpg)
         }
@@ -26,21 +35,30 @@
         }
         .draggable{
             position: absolute;
+            cursor: move;
         }
-        .draggable#bottle{
+        #laptop{
+            top: 365px;
+            left: 150px;
+
+        }
+        #notebook{
+            top: 390px;
+            left: 885px;
+        }
+        #calculator{
+            top: 2px;
+            left: 380px;
+        }
+        #bottle{
             bottom: 20vh;
             left: 25vw;
         }
-        .draggable#laptop{
-            bottom: 25vh;
-            right: 30vw;
-
-        }
-        .draggable#white{
+        #white{
             bottom: 30vh;
             right: 10vw;
         }
-        .draggable#pencilcase{
+        #pencilcase{
             top: 10vh;
             right: 30vw;
         }
@@ -48,16 +66,7 @@
 </head>
 <body>
     <a href="index.html">I'm done, let's put everything back...</a>
-    <div class="container">
-        <div class="draggable" id="bottle">
-            <img src="media/bottle.png" alt="bottle">
-        </div>
-        <div class="draggable" id="pencilcase">
-            <img src="media/pencil-case.png" alt="pencilcase">
-        </div>
-        <div class="draggable" id="white">
-            <img src="media/notebook_whitr.png" alt="white notebook">
-        </div>
+    <div class="wrapper">
         <div class="draggable" id="laptop">
             <img src="media/laptop.png" alt="laptop">
             <a href="desktop.html">Module 1</a>
@@ -70,11 +79,21 @@
             <img src="media/notebook_black.png" alt="black">
             <a href="week-2.html">Module 2</a>
         </div>
-        <div class="draggable" id="face">
-            <img src="media/face.png" alt="Reusable shopping bag">
-            <a href="week-3.html">Week 3</a>
-        </div>
     </div>
+    <div class="draggable" id="bottle">
+        <img src="media/bottle.png" alt="bottle">
+    </div>
+    <div class="draggable" id="pencilcase">
+        <img src="media/pencil-case.png" alt="pencilcase">
+    </div>
+    <div class="draggable" id="white">
+        <img src="media/notebook_whitr.png" alt="white notebook">
+    </div>
+    <div class="draggable" id="face">
+        <img src="media/face.png" alt="Reusable shopping bag">
+        <a href="week-3.html">Week 3</a>
+    </div>
+
     <script>
         // Get all the elements with class name "draggable":
         var draggableElements = document.getElementsByClassName("draggable");
