@@ -37,14 +37,19 @@
             position: absolute;
             width: 100vw;
             height: 94vh;
-            margin: 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
         }
-        .draggable{
+        .draggable1{
             position: absolute;
+            cursor: move;
+        }
+        .draggable2{
+            position: absolute;
+            display: flex;
+            flex-direction: row;
             cursor: move;
         }
         #laptop{
@@ -81,7 +86,7 @@
 <body>
     <a href="index.html">I'm done, let's put everything back...</a>
     <div class="wrapper">
-        <div class="draggable" id="laptop">
+        <div class="draggable1" id="laptop">
             <img src="media/laptop.png" alt="laptop">
             <a href="desktop.html">Module 1</a>
         </div>
@@ -94,7 +99,7 @@
             <a href="week-2.html">Module 2</a>
         </div>
     </div>
-    <div class="draggable" id="bottle">
+    <div class="draggable2" id="bottle">
         <img src="media/bottle.png" alt="bottle">
     </div>
     <div class="draggable" id="pencilcase">
@@ -105,7 +110,6 @@
     </div>
     <div class="draggable" id="face">
         <img src="media/face.png" alt="Reusable shopping bag">
-        <a href="week-3.html">Week 3</a>
     </div>
 
     <script>
