@@ -98,6 +98,7 @@
 <body>
   <div id="p5-background"></div>
   <div class="content">
+        <h1>WWWOT is HTML & CSS?</h1>
         <div class="wrapper">
           <div class="draggable" id="week1">
               <img id="folder" src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="folder">
@@ -127,7 +128,7 @@
       p.setup = function() {
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         canvas.parent('p5-background');
-        let image = p.imageMode(CENTER, CENTER);
+        p.imageMode(CENTER, CENTER);
       };
 
       p.draw = function() {
