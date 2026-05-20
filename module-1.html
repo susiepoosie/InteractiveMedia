@@ -120,37 +120,29 @@
 
 <script src="js/cursor.js"></script>
 <script>
-  new p5(function(p) {
-    p.setup = function() {
-      let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-      canvas.parent('p5-background'); // attach to the div
-    };
+    var pic;
+    function preload() {
+      pic = loadImage("js/pixel-mouse.png");
+      }
+    new p5(function(p) {
+      p.setup = function() {
+        let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+        canvas.parent('p5-background'); // attach to the div
+        p.imageMode(CENTER, CENTER);
+      };
 
-    p.draw = function() {
-      p.background(20);
-      function setup() {
-    createCanvas(windowWidth, windowHeight);
-  }
-  
-  
-  function draw() {
-    line(mouseX, mouseY, pmouseX, pmouseY);
-    strokeWeight(5)
-  }
-  
-  function mousePressed() {
-    background(random(256), random(256), random(256));
-  }
-      p.fill(255);
-      p.ellipse(p.mouseX, p.mouseY, 50, 50);
-    };
+      p.draw = function() {
+        p.background(0);
+        p.scale(2);
+        p.image(pic, mouseX/2, mouseY/2, 50, 50);
+      };
 
-    // Resize canvas when window resizes
-    p.windowResized = function() {
-      p.resizeCanvas(p.windowWidth, p.windowHeight);
-    };
-  });
-</script>
+      // Resize canvas when window resizes
+      p.windowResized = function() {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+      };
+    });
+  </script>
 <script>
         // Get all the elements with class name "draggable":
         var draggableElements = document.getElementsByClassName("draggable");
