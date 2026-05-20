@@ -6,102 +6,122 @@
   <title>Module 1: HTML & CSS</title>
 
   <style>
-    *{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Courier New', Courier, monospace;
-    font-style: normal;
-}
-
-*{
-    cursor:url(), auto;
-}
-
-/* tabs */
-#tabs{
-    width: 100vw;
-    margin: 0 auto;
-    display: flex;
-    justify-content: left;
-    font-size: 2vh;
-    }
-
-
-/* Draggable cursors */
-#mov-a{
-    position: absolute;
-    cursor: move;
-}
-
-#mov-b{
-    cursor: move;
-    position: absolute;
-}
-
-#mov-c{
-    cursor: move;
-    position: absolute;
-}
-
-.draggable{
-    position: absolute;
-    width: 100vw;
-    height: 94vh;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-#IMfolder{
-    width: 5em;
-    height: auto;
-    cursor: move;
-}
-
-.firstTab {
-    display: flex;
-    width: 22.5em;
-    height: auto;
-    border: .1em solid rgba(109, 106, 106, 0.609);
-    background-color: gainsboro;
-    top: 0%;
-    left: 0%;
-    transform: translate(0%, 0%);
-    padding: .2em;
-    justify-content:space-between;
-    align-items: center;
-}
-
-#foldertype{
-    font-size: .7em;
-    cursor: move;
-}
+        div {
+            display: block;
+            unicode-bidi: isolate;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-image: url(media/contents-bg.jpg)
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            /* You can set this to whatever you wish. */
+            width: 100%;
+            
+            /* You'll need to set a height. */
+            height: 100%;
+            
+            /* Allows positioning relative to this container. */
+            position: relative;
+        }
+        img{
+            height: 100px;
+        }
+        .wrapper {
+            position: absolute;
+            width: 100vw;
+            height: 94vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .draggable{
+            position: absolute;
+            cursor: move;
+            display: flex;
+            flex-direction: column;
+        }
 
   </style>
 </head>
 <body>
-  <div class="draggable">
-    <div id="mov-a">
-      <img id="#IMfolder" src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" width="100px">
-      <a href="week-1.html">Week 1</a>
+  <div class="wrapper">
+    <div class="draggable" id="week1">
+        <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="folder">
+        <a href="week-1.html">Week 1</a>
     </div>
-  </div>
-  <div class="draggable">
-    <div id="mov-a">
-      <img id="#IMfolder" src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" width="100px">
-      <a href="week-2.html">Week 2</a>
+    <div class="draggable" id="week2">
+        <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="black">
+        <a href="week-2.html">Week 2</a>
     </div>
-  </div>
-  <div class="draggable">
-    <div id="mov-a">
-      <img id="#IMfolder" src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" width="100px">
-      <a href="week-3.html">Week 3</a>
+    <div class="draggable" id="week3">
+        <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="calculator">
+        <a href="week-3.html">Week 3</a>
     </div>
   </div>
 
-<script src="main.js"></script>
+<script>
+        // Get all the elements with class name "draggable":
+        var draggableElements = document.getElementsByClassName("draggable");
+        
+        // Apply dragElement function to each draggable element:
+        for (var i = 0; i < draggableElements.length; i++) {
+        dragElement(draggableElements[i]);
+        }
+        
+        function dragElement(elmnt) {
+        var pos1 = 0,
+            pos2 = 0,
+            pos3 = 0,
+            pos4 = 0;
+        if (elmnt.getElementsByClassName(elmnt.className)[0]) {
+            elmnt.getElementsByClassName(elmnt.className)[0].onmousedown =
+            dragMouseDown;
+        } else {
+            // move the DIV from anywhere inside the DIV:
+            elmnt.onmousedown = dragMouseDown;
+        }
+        
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+        
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+            elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+        }
+        
+        function closeDragElement() {
+            // stop moving when mouse button is released:
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+        }
+</script>
 </body>
 </html>
