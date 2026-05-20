@@ -19,16 +19,30 @@
       display: block;
       unicode-bidi: isolate;
     }
-    .wrapper {
+    img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+    .container {
       position: absolute;
       width: 100vw;
       height: 100vh;
       margin: 0;
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      flex-wrap: wrap;
+      gap: auto;
+    }
+    .folder {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      cursor: url(https://static.vecteezy.com/system/resources/previews/034/335/110/non_2x/isolated-computer-classic-mouse-control-finger-cursor-pointer-8-bits-pixel-icon-png.png), auto;
     }
     
   </style>
@@ -36,17 +50,19 @@
 <body>
   <a href="module-1.html"></a>
   <h1>Module 1: The WWW, HTML & CSS</h1>
-  <div class="wrapper">
-    <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="8-bit folder">
-    <a href="week-1.html">Week 1</a>
-  </div>
-  <div class="wrapper">
-    <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="8-bit folder">
-    <a href="week-2.html">Week 2</a>
-  </div>
-  <div class="wrapper">
-    <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="8-bit folder">
-    <a href="week-3.html">Week 3</a>
+  <div class="container">
+    <div class="folder">
+      <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="8-bit folder">
+      <a href="week-1.html">Week 1</a>
+    </div>
+    <div class="folder">
+      <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="8-bit folder">
+      <a href="week-2.html">Week 2</a>
+    </div>
+    <div class="folder">
+      <img src="https://thumbs.dreamstime.com/b/pixel-art-folder-icon-business-file-organization-minimalist-yellow-projects-apps-ui-design-ideal-topics-related-to-376328755.jpg" alt="8-bit folder">
+      <a href="week-3.html">Week 3</a>
+    </div>
   </div>
 
 </body>
