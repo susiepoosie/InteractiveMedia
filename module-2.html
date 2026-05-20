@@ -22,7 +22,7 @@
       font-style: normal;
     }
 
-    canvas {
+    iframe canvas {
       position: fixed;
       left: 0;
       top: 0;
@@ -164,7 +164,6 @@
 
 </head>
 <body>
-  <iframe src="js/sketchbook.js" frameborder="0"></iframe>
   <div class="book">
  
     <div class="spine"></div>
@@ -280,7 +279,57 @@
     </div>
    
   </div>
-
+  <script>
+    // ── Background: pencil drawing sketch ──
+    // Stroke weight grows the longer the mouse is held down.
+    // Click to clear.
+    new p5(function(p) {
+      let pressedDuration = 0;
+ 
+      p.setup = function() {
+        const cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+        cnv.parent('bg-canvas');
+        p.background(217);
+        p.strokeCap(p.ROUND);
+        p.stroke(40);
+      };
+ 
+      p.draw = function() {
+        if (!p.mouseIsPressed) {
+          pressedDuration = 0;
+          return;
+        }
+ 
+        // Don't draw inside the sketchbook
+        const r = document.querySelector('.book').getBoundingClientRect();
+        if (p.mouseX > r.left && p.mouseX < r.right &&
+            p.mouseY > r.top  && p.mouseY < r.bottom) return;
+ 
+        pressedDuration++;
+ 
+        // Weight grows from 1 up to 12 the longer you hold
+        const weight = p.min(pressedDuration * 0.08, 12);
+        p.strokeWeight(weight);
+        p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+      };
+ 
+      p.mousePressed = function() {
+        const r = document.querySelector('.book').getBoundingClientRect();
+        if (p.mouseX > r.left && p.mouseX < r.right &&
+            p.mouseY > r.top  && p.mouseY < r.bottom) return;
+        pressedDuration = 0;
+      };
+ 
+      p.mouseReleased = function() {
+        pressedDuration = 0;
+      };
+ 
+      p.windowResized = function() {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        p.background(217);
+      };
+    });
+  </script>
   <script>
     let current = 0;
     const pages = document.querySelectorAll('.page');
