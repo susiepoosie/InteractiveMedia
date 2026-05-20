@@ -89,7 +89,7 @@
           position: absolute;
           width: 30em;
           transform: translate(-50%, -50%);
-          top: 70%;
+          top: 70vh;
           left: 80%;
         }
 
@@ -118,7 +118,6 @@
         </div>
   </div>
 
-<script src="js/cursor.js"></script>
 <script>
     var pic;
     function preload() {
@@ -127,14 +126,14 @@
     new p5(function(p) {
       p.setup = function() {
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-        canvas.parent('p5-background'); // attach to the div
-        p.imageMode(CENTER, CENTER);
+        canvas.parent('p5-background');
+        let image = p.imageMode(CENTER, CENTER);
       };
 
       p.draw = function() {
         p.background("white");
         p.scale(2);
-        p.image(pic, mouseX/2, mouseY/2);
+        p.image(pic, mouseX/2, mouseY/2, 50, 50);
       };
 
       // Resize canvas when window resizes
