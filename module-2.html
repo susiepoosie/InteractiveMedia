@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 2: Creative Coding</title>
   <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Gochi+Hand&display=swap" rel="stylesheet">
-  <script language="javascript" type="text/javascript" src="js/notebookCover.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -145,6 +145,12 @@
 
     .nav button:hover { background: #888; color: #fff; }
     .nav button:disabled { opacity: 0.2; cursor: default; }
+
+    #page-0 canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 
 </head>
@@ -303,6 +309,37 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'ArrowRight') goTo(current + 1);
       if (e.key === 'ArrowLeft')  goTo(current - 1);
+    });
+  </script>
+
+  <script>
+    // p5.js sketch in instance mode so it draws into cover page rather than taking over the whole window
+    new p5(function(p) {
+      let capture;
+  
+      p.setup = function() {
+        // Canvas size fits cover page div size
+        const page = document.getElementById('page-0');
+        const cnv = p.createCanvas(page.offsetWidth, page.offsetHeight);
+        cnv.parent('page-0');
+  
+        capture = p.createCapture(p.VIDEO);
+        capture.size(page.offsetWidth, page.offsetHeight);
+        capture.hide();
+      };
+  
+      p.draw = function() {
+        p.background(0);
+        p.image(capture, 0, 0, p.width, p.height);
+        p.filter(p.THRESHOLD);
+        p.filter(p.INVERT);
+      };
+  
+      // Responsive canvas
+      p.windowResized = function() {
+        const page = document.getElementById('page-0');
+        p.resizeCanvas(page.offsetWidth, page.offsetHeight);
+      };
     });
   </script>
 </body>
