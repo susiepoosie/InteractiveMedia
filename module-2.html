@@ -4,353 +4,254 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 2: Creative Coding</title>
-
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-   
-    :root {
-      --paper:      white;
-      --paper-2:    #fff5d7;
-      --paper-3:    #ede5d0;
-      --paper-dark: #e8dfc8;
-      --ink:        black;
-      --ink-light:  #5c5c5c;
-      --red:        #c0392b;
-      --spine:      #643b0c;
-      --spine-dark: #513413;
-      --tab-1:      #ff0000;
-      --tab-2:      #ff9d00;
-      --tab-3:      #9cff2a;
-      --tab-4:      #5500ff;
-      --tab-5:      #ff00d0;
-      --shadow:     rgba(40, 25, 5, 0.35);
-      --line:       rgba(100, 80, 40, 0.18);
-    }
-   
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       min-height: 100vh;
-      background: #e3e3e3;
+      background: #2a1f0f;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Lora', Georgia, serif;
-      padding: 40px 20px;
+      font-family: Georgia, serif;
     }
-   
-    .scene {
-      perspective: 1800px;
-      width: 680px;
-      height: 520px;
-    }
-   
+
+    /* ── Book container ── */
     .book {
-      width: 100%;
-      height: 100%;
       position: relative;
-      transform-style: preserve-3d;
+      width: 620px;
+      height: 480px;
     }
-   
-    /* ─── Spine ─── */
+
+    /* ── Spine on the left ── */
     .spine {
       position: absolute;
-      left: -22px;
-      top: 6px;
-      width: 22px;
-      height: calc(100% - 12px);
-      background: linear-gradient(to right, var(--spine-dark), var(--spine), #a07840);
+      left: -20px;
+      top: 4px;
+      width: 20px;
+      height: calc(100% - 8px);
+      background: #7a5c3a;
       border-radius: 3px 0 0 3px;
-      box-shadow: -4px 4px 16px rgba(0,0,0,0.5);
-      z-index: 0;
+      box-shadow: -3px 3px 10px rgba(0,0,0,0.5);
     }
-   
-    .spine::after {
-      content: 'SKETCHBOOK';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-90deg);
-      font-family: 'Caveat', cursive;
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: rgba(255,240,200,0.6);
-      white-space: nowrap;
-    }
-   
-    /* ─── Page stack shadow layers ─── */
-    .stack {
+
+    /* ── Stacked pages effect ── */
+    .book::before {
+      content: '';
       position: absolute;
       inset: 0;
+      background: #ddd4bc;
       border-radius: 0 4px 4px 0;
-      box-shadow:
-        4px 4px 0 var(--paper-dark),
-        7px 7px 0 #ddd4bc,
-        10px 10px 18px rgba(0,0,0,0.4);
+      transform: translate(6px, 6px);
+      box-shadow: 4px 4px 14px rgba(0,0,0,0.35);
     }
-   
-    /* ─── Pages ─── */
+
+    /* ── Individual pages ── */
     .page {
       position: absolute;
       inset: 0;
-      background: var(--paper);
+      background: #f5f0e8;
       border-radius: 0 4px 4px 0;
-      overflow: hidden;
+      padding: 40px 36px;
       display: none;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+      overflow-y: auto;
     }
-   
-    .page.active { display: block; }
-   
-    /* Paper texture lines */
-    .page::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 31px,
-        var(--line) 31px,
-        var(--line) 32px
-      );
-      background-position: 0 68px;
-      pointer-events: none;
-      z-index: 0;
+
+    .page.active {
+      display: block;
     }
-   
-    /* Margin line */
-    .page::after {
-      content: '';
-      position: absolute;
-      left: 68px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: rgba(180, 100, 100, 0.25);
-      pointer-events: none;
-      z-index: 0;
-    }
-   
-    /* ─── Page flip animation ─── */
+
+    /* ── Flip animation ── */
     @keyframes flip-in {
-      from { clip-path: inset(0 100% 0 0); opacity: 0.6; }
-      to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0% 0 0); }
     }
-    @keyframes flip-out {
-      from { clip-path: inset(0 0% 0 0);   opacity: 1; }
-      to   { clip-path: inset(0 0 0 100%); opacity: 0.4; }
+
+    .page.flip-in {
+      animation: flip-in 0.3s ease both;
     }
-   
-    .page.flip-in  { animation: flip-in  0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
-    .page.flip-out { display: block !important; animation: flip-out 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
-   
-    /* ─── Tabs ─── */
+
+    /* ── Tabs on the right ── */
     .tabs {
       position: absolute;
-      right: -38px;
-      top: 20px;
+      right: -36px;
+      top: 24px;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      z-index: 10;
     }
-   
+
     .tab {
-      width: 42px;
-      height: 64px;
-      border-radius: 0 8px 8px 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
-      position: relative;
+      width: 38px;
+      height: 60px;
       border: none;
-      outline: none;
-    }
-   
-    .tab:hover { transform: translateX(5px); box-shadow: 5px 3px 12px rgba(0,0,0,0.4); }
-   
-    .tab.active {
-      transform: translateX(8px);
-      box-shadow: 6px 3px 14px rgba(0,0,0,0.45);
-      z-index: 11;
-    }
-   
-    .tab span {
-      font-family: 'Caveat', cursive;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
       font-size: 11px;
-      font-weight: 600;
+      font-family: Georgia, serif;
       color: rgba(255,255,255,0.9);
       writing-mode: vertical-rl;
-      text-orientation: mixed;
       letter-spacing: 1px;
-      text-transform: uppercase;
+      box-shadow: 3px 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-   
-    .tab[data-page="0"] { background: var(--tab-1); }
-    .tab[data-page="1"] { background: var(--tab-2); }
-    .tab[data-page="2"] { background: var(--tab-3); }
-    .tab[data-page="3"] { background: var(--tab-4); }
-    .tab[data-page="4"] { background: var(--tab-5); }
-   
-    /* ─── Page inner content ─── */
-    .page-inner {
-      position: relative;
-      z-index: 1;
-      padding: 52px 40px 40px 88px;
-      height: 100%;
-      overflow-y: auto;
+
+    .tab:hover {
+      transform: translateX(4px);
     }
-   
-    .page-inner::-webkit-scrollbar { width: 4px; }
-    .page-inner::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
-   
-    .page-title {
-      font-family: 'Caveat', cursive;
-      font-size: 32px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 24px;
-      line-height: 1;
+
+    .tab.active {
+      transform: translateX(7px);
+      box-shadow: 5px 2px 12px rgba(0,0,0,0.4);
     }
-   
-    .page-title::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 2px;
-      margin-top: 8px;
-      border-radius: 1px;
-    }
-   
-    .tab[data-page="0"] ~ .pages .page:nth-child(1) .page-title::after { background: var(--tab-1); }
-   
-    p { font-size: 14px; line-height: 1.9; color: var(--ink-light); margin-bottom: 16px; }
-   
-    /* Page-number stamp */
-    .page-num {
-      position: absolute;
-      bottom: 20px;
-      right: 28px;
-      font-family: 'Caveat', cursive;
-      font-size: 16px;
-      color: var(--ink-light);
-      opacity: 0.5;
-      z-index: 1;
-    }
-   
-    /* ─── Sketchy decorations per page ─── */
-    .deco-svg {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-    }
-   
-    /* ─── Navigation arrows ─── */
+
+    /* Tab colours — change these to whatever you like */
+    .tab:nth-child(1) { background: #c9924a; }
+    .tab:nth-child(2) { background: #6a9e62; }
+    .tab:nth-child(3) { background: #5a82a8; }
+    .tab:nth-child(4) { background: #a86878; }
+
+    /* ── Prev / Next arrows ── */
     .nav {
       position: absolute;
-      bottom: 18px;
-      left: 88px;
+      bottom: 14px;
+      right: 18px;
       display: flex;
-      gap: 10px;
-      z-index: 2;
+      gap: 8px;
     }
-   
-    .nav-btn {
+
+    .nav button {
       background: none;
-      border: 1.5px solid var(--ink-light);
+      border: 1px solid #aaa;
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--ink-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, color 0.15s;
-      opacity: 0.6;
-    }
-   
-    .nav-btn:hover { background: var(--ink-light); color: var(--paper); opacity: 1; }
-    .nav-btn:disabled { opacity: 0.2; cursor: default; }
-   
-    /* ─── Content helpers ─── */
-    .tag {
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-family: 'Caveat', cursive;
-      font-size: 13px;
-      margin: 3px 3px 3px 0;
-    }
-   
-    .sketch-list { list-style: none; padding: 0; }
-    .sketch-list li {
-      font-size: 14px;
-      color: var(--ink-light);
-      padding: 6px 0;
-      border-bottom: 1px dashed var(--line);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      line-height: 1.5;
-    }
-    .sketch-list li::before {
-      content: '—';
-      font-family: 'Caveat', cursive;
-      color: var(--ink);
-      opacity: 0.4;
-      flex-shrink: 0;
-    }
-   
-    .quote-block {
-      border-left: 3px solid;
-      padding: 10px 16px;
-      margin: 20px 0;
-      font-style: italic;
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--ink);
-      background: rgba(0,0,0,0.03);
-      border-radius: 0 4px 4px 0;
-    }
-   
-    .color-swatch {
-      display: inline-block;
       width: 28px;
       height: 28px;
-      border-radius: 50%;
-      border: 2px solid rgba(0,0,0,0.15);
-      vertical-align: middle;
-      margin-right: 6px;
-    }
-   
-    table.sketch-table {
-      width: 100%;
-      border-collapse: collapse;
+      cursor: pointer;
       font-size: 13px;
-      color: var(--ink-light);
-      margin-top: 8px;
+      color: #888;
+      transition: background 0.15s, color 0.15s;
     }
-    table.sketch-table th {
-      font-family: 'Caveat', cursive;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--ink);
-      text-align: left;
-      padding: 6px 10px 6px 0;
-      border-bottom: 1.5px solid var(--ink);
-    }
-    table.sketch-table td {
-      padding: 7px 10px 7px 0;
-      border-bottom: 1px dashed var(--line);
-      line-height: 1.5;
-    }
+
+    .nav button:hover { background: #888; color: #fff; }
+    .nav button:disabled { opacity: 0.2; cursor: default; }
   </style>
+
 </head>
 <body>
-  <!-- Content goes here -->
+  <div class="book">
+ 
+    <div class="spine"></div>
+   
+    <!-- Add or remove .page divs to change the number of pages -->
+    <!-- Each .page corresponds to one tab in .tabs below -->
+   
+    <div class="page active" id="page-0">
+      <h1>Week 4</h1>
+      <p>Module B: Creative Coding</p>
+
+        <!-- RESEARCH -->
+        <h2>Hunt'n'Gather</h2>
+        <p>Mirror, Mirror: Gather 3 examples of reflection/webcam works.</p>
+        
+          <h3>facebook by Lim Si Ping (Handson), 2019</h3>
+          <p>facebook' is an interactive installation that uses facial recognition technology to track the reader's personal data through multiple search engines, filling in a narrative template on its back-end to develop, in real time, a story tailored to the individual. It comprises of a physical book and two web cameras, one that tracks the user's page flipping motion, to project new content onto each new spread, and a second which constantly traces their face to derive data to be injected into the story. Depending on the user, details of the storyline will be completely different, including their name, age, occupation, locstion and relationships. Created in "dialogue with big brother", the work examines the role of social media, the digital footprint, data privacy.
+          </p>
+
+          <h3>[i miss your touch] by PluginHUMAN, 2020</h3>
+          <p></p>
+
+          <h3>Learning to See Series by Memo Atken, Ongoing</h3>
+          <p>An ongoing collection of works that uses machine learning and AI to produce live image interpretations of the real world, through filters of its learned image dataset. The result is these dream-like artistic interpretations of mundane reality, making us question how we make sense of the world, our own consciousness influenced by expectations and existing beliefs. I found the creative and philosophical application of ML and AI especially refreshing, as it urged me to consider future implications of such technology on the way we experience the world.
+          </p>
+
+        <!-- CLASS STUFF -->
+        <h2>Interactivities</h2>
+          <h3>Act_01: Offline Algorithmic Thinking</h3>
+          <!-- intro to p5.js anatomy, basic shapes, colours and cursor drawing -->
+          <h3>Act_02: Let's GO!!!</h3>
+          <!-- primitiveShapes.js -->
+
+        <!-- OTHER STUFF-->
+        <h2>Homework</h2>
+        <p>A couple simple experimental p5.js sketches to familiarise with using Processing.</p>
+
+          <h3>drawSnoopy.js</h3>
+
+        <h2>Workbook Progression</h2>
+
+        <h2>Reflection</h2>
+    </div>
+   
+    <div class="page" id="page-1">
+      <!-- Page 2 content goes here -->
+    </div>
+   
+    <div class="page" id="page-2">
+      <!-- Page 3 content goes here -->
+    </div>
+   
+    <div class="page" id="page-3">
+      <!-- Page 4 content goes here -->
+    </div>
+   
+    <!-- Add more pages here if needed -->
+   
+    <!-- Tabs — one per page. Update the label text to match your pages -->
+    <div class="tabs">
+      <button class="tab active" data-page="0">Cover</button>
+      <button class="tab"        data-page="1">Week 4</button>
+      <button class="tab"        data-page="2">Week 5</button>
+      <button class="tab"        data-page="3">Tab 4</button>
+      <!-- Add more tabs here if needed -->
+    </div>
+   
+    <!-- Prev / Next navigation -->
+    <div class="nav">
+      <button id="prev" disabled>←</button>
+      <button id="next">→</button>
+    </div>
+   
+  </div>
+
+  <script>
+    let current = 0;
+    const pages = document.querySelectorAll('.page');
+    const tabs  = document.querySelectorAll('.tab');
+    const total = pages.length;
+   
+    function goTo(next) {
+      if (next === current || next < 0 || next >= total) return;
+   
+      pages[current].classList.remove('active');
+      tabs[current].classList.remove('active');
+   
+      current = next;
+   
+      pages[current].classList.add('active', 'flip-in');
+      tabs[current].classList.add('active');
+   
+      pages[current].addEventListener('animationend', () => {
+        pages[current].classList.remove('flip-in');
+      }, { once: true });
+   
+      document.getElementById('prev').disabled = current === 0;
+      document.getElementById('next').disabled = current === total - 1;
+    }
+   
+    // Tab clicks
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => goTo(parseInt(tab.dataset.page)));
+    });
+   
+    // Arrow buttons
+    document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+   
+    // Keyboard arrows
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goTo(current + 1);
+      if (e.key === 'ArrowLeft')  goTo(current - 1);
+    });
+  </script>
 </body>
 </html>
