@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2: Creative Coding</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+   
+    :root {
+      --paper:      white;
+      --paper-2:    #fff5d7;
+      --paper-3:    #ede5d0;
+      --paper-dark: #e8dfc8;
+      --ink:        black;
+      --ink-light:  #5c5c5c;
+      --red:        #c0392b;
+      --spine:      #643b0c;
+      --spine-dark: #513413;
+      --tab-1:      #ff0000;
+      --tab-2:      #ff9d00;
+      --tab-3:      #9cff2a;
+      --tab-4:      #5500ff;
+      --tab-5:      #ff00d0;
+      --shadow:     rgba(40, 25, 5, 0.35);
+      --line:       rgba(100, 80, 40, 0.18);
+    }
+   
+    body {
+      min-height: 100vh;
+      background: #e3e3e3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lora', Georgia, serif;
+      padding: 40px 20px;
+    }
+   
+    .scene {
+      perspective: 1800px;
+      width: 680px;
+      height: 520px;
+    }
+   
+    .book {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+   
+    /* ─── Spine ─── */
+    .spine {
+      position: absolute;
+      left: -22px;
+      top: 6px;
+      width: 22px;
+      height: calc(100% - 12px);
+      background: linear-gradient(to right, var(--spine-dark), var(--spine), #a07840);
+      border-radius: 3px 0 0 3px;
+      box-shadow: -4px 4px 16px rgba(0,0,0,0.5);
+      z-index: 0;
+    }
+   
+    .spine::after {
+      content: 'SKETCHBOOK';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-family: 'Caveat', cursive;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(255,240,200,0.6);
+      white-space: nowrap;
+    }
+   
+    /* ─── Page stack shadow layers ─── */
+    .stack {
+      position: absolute;
+      inset: 0;
+      border-radius: 0 4px 4px 0;
+      box-shadow:
+        4px 4px 0 var(--paper-dark),
+        7px 7px 0 #ddd4bc,
+        10px 10px 18px rgba(0,0,0,0.4);
+    }
+   
+    /* ─── Pages ─── */
+    .page {
+      position: absolute;
+      inset: 0;
+      background: var(--paper);
+      border-radius: 0 4px 4px 0;
+      overflow: hidden;
+      display: none;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    }
+   
+    .page.active { display: block; }
+   
+    /* Paper texture lines */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 31px,
+        var(--line) 31px,
+        var(--line) 32px
+      );
+      background-position: 0 68px;
+      pointer-events: none;
+      z-index: 0;
+    }
+   
+    /* Margin line */
+    .page::after {
+      content: '';
+      position: absolute;
+      left: 68px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(180, 100, 100, 0.25);
+      pointer-events: none;
+      z-index: 0;
+    }
+   
+    /* ─── Page flip animation ─── */
+    @keyframes flip-in {
+      from { clip-path: inset(0 100% 0 0); opacity: 0.6; }
+      to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+    }
+    @keyframes flip-out {
+      from { clip-path: inset(0 0% 0 0);   opacity: 1; }
+      to   { clip-path: inset(0 0 0 100%); opacity: 0.4; }
+    }
+   
+    .page.flip-in  { animation: flip-in  0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .page.flip-out { display: block !important; animation: flip-out 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
+   
+    /* ─── Tabs ─── */
+    .tabs {
+      position: absolute;
+      right: -38px;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 10;
+    }
+   
+    .tab {
+      width: 42px;
+      height: 64px;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+      position: relative;
+      border: none;
+      outline: none;
+    }
+   
+    .tab:hover { transform: translateX(5px); box-shadow: 5px 3px 12px rgba(0,0,0,0.4); }
+   
+    .tab.active {
+      transform: translateX(8px);
+      box-shadow: 6px 3px 14px rgba(0,0,0,0.45);
+      z-index: 11;
+    }
+   
+    .tab span {
+      font-family: 'Caveat', cursive;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+   
+    .tab[data-page="0"] { background: var(--tab-1); }
+    .tab[data-page="1"] { background: var(--tab-2); }
+    .tab[data-page="2"] { background: var(--tab-3); }
+    .tab[data-page="3"] { background: var(--tab-4); }
+    .tab[data-page="4"] { background: var(--tab-5); }
+   
+    /* ─── Page inner content ─── */
+    .page-inner {
+      position: relative;
+      z-index: 1;
+      padding: 52px 40px 40px 88px;
+      height: 100%;
+      overflow-y: auto;
+    }
+   
+    .page-inner::-webkit-scrollbar { width: 4px; }
+    .page-inner::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+   
+    .page-title {
+      font-family: 'Caveat', cursive;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+   
+    .page-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      margin-top: 8px;
+      border-radius: 1px;
+    }
+   
+    .tab[data-page="0"] ~ .pages .page:nth-child(1) .page-title::after { background: var(--tab-1); }
+   
+    p { font-size: 14px; line-height: 1.9; color: var(--ink-light); margin-bottom: 16px; }
+   
+    /* Page-number stamp */
+    .page-num {
+      position: absolute;
+      bottom: 20px;
+      right: 28px;
+      font-family: 'Caveat', cursive;
+      font-size: 16px;
+      color: var(--ink-light);
+      opacity: 0.5;
+      z-index: 1;
+    }
+   
+    /* ─── Sketchy decorations per page ─── */
+    .deco-svg {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+   
+    /* ─── Navigation arrows ─── */
+    .nav {
+      position: absolute;
+      bottom: 18px;
+      left: 88px;
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+   
+    .nav-btn {
+      background: none;
+      border: 1.5px solid var(--ink-light);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--ink-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      opacity: 0.6;
+    }
+   
+    .nav-btn:hover { background: var(--ink-light); color: var(--paper); opacity: 1; }
+    .nav-btn:disabled { opacity: 0.2; cursor: default; }
+   
+    /* ─── Content helpers ─── */
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      margin: 3px 3px 3px 0;
+    }
+   
+    .sketch-list { list-style: none; padding: 0; }
+    .sketch-list li {
+      font-size: 14px;
+      color: var(--ink-light);
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .sketch-list li::before {
+      content: '—';
+      font-family: 'Caveat', cursive;
+      color: var(--ink);
+      opacity: 0.4;
+      flex-shrink: 0;
+    }
+   
+    .quote-block {
+      border-left: 3px solid;
+      padding: 10px 16px;
+      margin: 20px 0;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: rgba(0,0,0,0.03);
+      border-radius: 0 4px 4px 0;
+    }
+   
+    .color-swatch {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.15);
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+   
+    table.sketch-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      color: var(--ink-light);
+      margin-top: 8px;
+    }
+    table.sketch-table th {
+      font-family: 'Caveat', cursive;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: left;
+      padding: 6px 10px 6px 0;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    table.sketch-table td {
+      padding: 7px 10px 7px 0;
+      border-bottom: 1px dashed var(--line);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <!-- Content goes here -->
+</body>
+</html>
