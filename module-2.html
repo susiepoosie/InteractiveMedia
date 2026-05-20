@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 2: Creative Coding</title>
   <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Gochi+Hand&display=swap" rel="stylesheet">
+  <script language="javascript" type="text/javascript" src="js/notebookCover.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -22,7 +23,8 @@
     h1 {
       font-family: "Gochi Hand", cursive;
       font-weight: 400;
-      font-style: normal;      
+      font-style: normal;
+      font-variant: small-caps;      
     }
 
     /* ── Book container ── */
@@ -123,8 +125,8 @@
     /* ── Prev / Next arrows ── */
     .nav {
       position: absolute;
-      bottom: 14px;
-      right: 18px;
+      bottom: 15px;
+      left: 300px;
       display: flex;
       gap: 8px;
     }
@@ -248,10 +250,10 @@
    
     <!-- Tabs — one per page. Update the label text to match your pages -->
     <div class="tabs">
-      <button class="tab active" data-page="0">Cover</button>
+      <button class="tab active" data-page="0"></button>
       <button class="tab"        data-page="1">Week 4</button>
       <button class="tab"        data-page="2">Week 5</button>
-      <button class="tab"        data-page="3">Tab 4</button>
+      <button class="tab"        data-page="3"></button>
       <!-- Add more tabs here if needed -->
     </div>
    
