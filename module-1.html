@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 1: HTML & CSS</title>
   <script language="javascript" type="text/javascript" src="js/p5.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+
 
   <style>
         #p5-background {
@@ -30,9 +32,9 @@
         }
         body{
             background-color: white;
-            cursor: url("media/cursor_pen.png") 32 32, auto;
             color: #000;
             text-decoration: none;
+            font-family: "Jersey 10", monospace;
         }
 
         .center {
@@ -119,11 +121,8 @@
         </div>
   </div>
 
+<script src="js/cursor.js"></script>
 <script>
-    var pic;
-    function preload() {
-      pic = loadImage("js/pixel-mouse.png");
-      }
     new p5(function(p) {
       p.setup = function() {
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
