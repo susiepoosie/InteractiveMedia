@@ -39,6 +39,8 @@
 
         h1 {
           position: absolute;
+          font-size: 80px;
+          transform: rotate(45);
           top: 20vh;
           left: 50vw;
         }
@@ -138,6 +140,7 @@
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         canvas.parent('p5-background');
         p.imageMode(CENTER, CENTER);
+        p.imageSize(50,50);
       };
 
       p.draw = function() {
