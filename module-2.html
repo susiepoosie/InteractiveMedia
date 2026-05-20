@@ -22,11 +22,17 @@
       font-style: normal;
     }
 
-    #bg-canvas canvas {
+    #bg-canvas {
       position: fixed;
       left: 0;
       top: 0;
-      z-index: -1;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    #bg-canvas canvas {
+      display: block;
     }
 
     h1 {
@@ -170,7 +176,10 @@
 
 </head>
 <body>
-  <div id="bg-canvas"></div>
+  <div id="bg-canvas">
+    <a href="contents.html"><img src="backpack.html" alt="contents" width="100px" height="100px"></a>
+  </div>
+
   <div class="book">
  
     <div class="spine"></div>
@@ -285,6 +294,10 @@
       <button id="next">→</button>
     </div>
    
+  </div>
+
+  <div>
+    draw!
   </div>
 
   <script>
