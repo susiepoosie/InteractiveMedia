@@ -37,6 +37,12 @@
             font-family: "Jersey 10", monospace;
         }
 
+        h1 {
+          position: absolute;
+          top: 20vh;
+          left: 50vw;
+        }
+
         .center {
             display: flex;
             justify-content: center;
@@ -123,6 +129,10 @@
 
 <script src="js/cursor.js"></script>
 <script>
+    var pic;
+    function preload() {
+      pic = loadImage("js/pixel-mouse.png");
+      }
     new p5(function(p) {
       p.setup = function() {
         let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
