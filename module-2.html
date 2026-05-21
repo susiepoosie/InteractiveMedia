@@ -19,7 +19,7 @@
       font-family: "Fuzzy Bubbles", serif;
       font-weight: 400;
       font-style: normal;
-      font-size: small;
+      font-size: 1em;
       margin: 3em;
     }
 
@@ -32,11 +32,16 @@
     }
 
     h2 {
-      font-size: 1em;
+      font-size: 2em;
     }
 
     img {
       max-width: 600px;
+    }
+
+    figcaption {
+      font-weight: 500;
+      margin: 3em;
     }
 
     /* ── Book container ── */
@@ -162,10 +167,20 @@
       overflow: hidden;
     }
 
+    #pen {
+      position: absolute;
+      width: 300px;
+      transform: translate(-50%, -50%);
+      bottom: 20px;
+      right: 30%;
+    }
+
   </style>
 
 </head>
 <body>
+  <img id="pen" src="https://stationerypal.com/cdn/shop/files/MujiSmoothWritingGelPen0.5mm-Black_2.png?v=1689563610" alt="">
+
   <div class="book">
  
     <div class="spine"></div>
