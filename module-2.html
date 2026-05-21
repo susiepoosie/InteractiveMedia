@@ -28,8 +28,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-family: sans-serif;
     }
     
     body {
@@ -283,43 +281,43 @@
   <img id="pen" src="https://stationerypal.com/cdn/shop/files/MujiSmoothWritingGelPen0.5mm-Black_2.png?v=1689563610" alt="">
 </div>
 
-  <script>
+<script>
+  new p5(function(p) {
     let x, y, xspeed = 5, yspeed = 2, r = 25;
-let ballColor;
+    let ballColor;
 
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  x = width / 2;
-  y = height / 2;
-  ballColor = color(255); // start white
-}
+    p.setup = function() {
+      let cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+      cnv.style('position', 'fixed');
+      cnv.style('top', '0');
+      cnv.style('left', '0');
+      cnv.style('z-index', '0');
+      document.body.appendChild(cnv.elt);
+      x = p.width / 2;
+      y = p.height / 2;
+      ballColor = p.color(255);
+    };
 
-function draw() {
-  clear();
-  fill(ballColor);
-  noStroke();
-  ellipse(x, y, r * 2, r * 2);
-  x += xspeed;
-  y += yspeed;
+    p.draw = function() {
+      p.clear();
+      p.fill(ballColor);
+      p.noStroke();
+      p.ellipse(x, y, r * 2, r * 2);
+      x += xspeed;
+      y += yspeed;
+      if (x > p.width - r || x < r) { xspeed = -xspeed; ballColor = randomColor(); }
+      if (y > p.height - r || y < r) { yspeed = -yspeed; ballColor = randomColor(); }
+    };
 
-  if (x > width - r || x < r) {
-    xspeed = -xspeed;
-    ballColor = randomColor();
-  }
-  if (y > height - r || y < r) {
-    yspeed = -yspeed;
-    ballColor = randomColor();
-  }
-}
+    function randomColor() {
+      return p.color(p.random(255), p.random(255), p.random(255));
+    }
 
-function randomColor() {
-  return color(random(255), random(255), random(255));
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
-  </script>
+    p.windowResized = function() {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    };
+  });
+</script>
 
   <script>
     // Page navigation
