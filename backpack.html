@@ -8,21 +8,15 @@
                 position: fixed;
                 top: 0;
                 left: 0;
-                z-index: -1;
-                pointer-events: none;
+                z-index: 1;
             }
             body {
-                background-color: transparent;
+                background-color: black;
             }
         </style>
     </head>
     
     <body>
-        <div>
-            <h1>oh, you found Susan's bag.</h1>
-            <h2>can't hurt to take a peek...</h2>
-        </div>
-        
         <script>
             let offscreen;
             let bagImg;
@@ -44,6 +38,14 @@
                 let my = mouseY;
 
                 background(0);
+
+                fill(255);
+                noStroke();
+                textFont('monospace');
+                textSize(28);
+                text("oh, you found Susan's bag.", 40, 80);
+                textSize(20);
+                text("can't hurt to take a peek...", 40, 120);
 
                 let imgH = windowHeight * 0.7;
                 let imgW = bagImg.width * (imgH / bagImg.height);
