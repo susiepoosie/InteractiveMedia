@@ -82,6 +82,7 @@
       border-radius: 0 4px 4px 0;
       padding: 40px 36px;
       display: none;
+      overflow-x: hidden;
       overflow-y: auto;
     }
 
@@ -137,6 +138,7 @@
     .tab:nth-child(1) { background: #cfcfcf; }
     .tab:nth-child(2) { background: #919191; }
     .tab:nth-child(3) { background: #dadada; }
+    .tab:nth-child(4) { background: #a9a9a9; }
 
     /* ── Prev / Next arrows ── */
     .nav {
@@ -174,7 +176,6 @@
       bottom: 20px;
       right: 30%;
     }
-
   </style>
 
 </head>
@@ -282,9 +283,10 @@
    
     <!-- Tabs — one per page. Update the label text to match your pages -->
     <div class="tabs">
-      <button class="tab active" data-page="0"></button>
-      <button class="tab"        data-page="1">Week 4</button>
-      <button class="tab"        data-page="2">Week 5</button>
+      <button class="tab active" data-page="0">Cover</button>
+      <button class="tab"        data-page="1">Research</button>
+      <button class="tab"        data-page="2">Activities</button>
+      <button class="tab"        data-page="3">Experimentation</button>
       <!-- Add more tabs here if needed -->
     </div>
    
