@@ -424,53 +424,6 @@
 </script>
 
 <script>
-  let drawingSketchReady = false;
-
-  function initDrawingSketch() {
-    if (drawingSketchReady) return;
-    drawingSketchReady = true;
-
-    new p5(function(p) {
-      let pressedDuration = 0;
-
-      p.setup = function() {
-        const page = document.getElementById('page-0');
-        const cnv  = p.createCanvas(page.offsetWidth, page.offsetHeight);
-        cnv.parent('page-0');
-
-        // Float above page content, transparent background
-        cnv.style('position', 'absolute');
-        cnv.style('top', '0');
-        cnv.style('left', '0');
-        cnv.style('z-index', '10');
-
-        p.clear();
-        p.strokeCap(p.ROUND);
-        p.stroke(30, 30, 30, 180);
-      };
-
-      p.draw = function() {
-        if (!p.mouseIsPressed) { pressedDuration = 0; return; }
-        pressedDuration++;
-        const weight = p.min(pressedDuration * 0.08, 12); // ← 0.08 = thickening speed, 12 = max stroke weight
-        p.strokeWeight(weight);
-        p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-      };
-
-      p.mouseReleased  = function() { pressedDuration = 0; };
-      p.doubleClicked  = function() { p.clear(); };  // double-click to clear
-
-      p.windowResized = function() {
-        const page = document.getElementById('page-0');
-        p.resizeCanvas(page.offsetWidth, page.offsetHeight);
-        p.clear();
-      };
-    });
-  }
-</script>
-
-
-<script>
   const _goTo = goTo;
   goTo = function(next) {
     _goTo(next);
