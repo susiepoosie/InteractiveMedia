@@ -7,25 +7,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; overflow-x: hidden; display: flex; }
+    html, body { height: 100%; width: 100%; overflow: hidden; }
 
-    body { background-color: rgb(255, 97, 155); }
-
-    .gallery-pane {
-      flex: 1;
-      min-width: 0;
+    body {
       display: flex;
       flex-direction: column;
-      border-right: 1px solid #000;
-      overflow: hidden;
+      background-color: rgb(255, 97, 155);
     }
 
+    /* ── Header banner ── */
     .header {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 3em 8em;
+      padding: 1em 3em;
       flex-shrink: 0;
+      border-bottom: 1px solid #000;
     }
 
     .banner {
@@ -34,7 +31,7 @@
       border: 2px solid black;
       border-radius: 20px;
       font-family: "Bitcount Single", monospace;
-      font-size: clamp(1.2rem, 4vw, 5em);
+      font-size: clamp(1.2rem, 3vw, 3.5em);
       font-weight: 300;
       display: flex;
       justify-content: center;
@@ -42,66 +39,14 @@
       color: black;
     }
 
-    .gallery-label {
-      padding: 8px 12px;
-      border-bottom: 1px solid #000;
-      flex-shrink: 0;
-    }
-
-    /* ── Bookcase gallery ── */
-    .gallery-scroll {
+    /* ── Main content row ── */
+    .main {
+      display: flex;
       flex: 1;
       min-height: 0;
-      padding: 10px;
-      overflow: hidden;
     }
 
-    .gallery {
-      display: none;
-      flex-direction: row;
-      align-items: stretch;
-      height: 100%;
-      gap: 4px;
-    }
-
-    .gallery.active { display: flex; }
-
-    .tile {
-      flex: 0 0 35px;
-      height: 100%;
-      background: #ddd;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .tile:hover { flex: 0 0 500px; }
-
-    .tile-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .tile-label {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%) rotate(90deg);
-      transform-origin: center center;
-      white-space: nowrap;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: #555;
-      pointer-events: none;
-    }
-
-    .tile:hover .tile-label { opacity: 0; }
-
-    /* ── Keypad ── */
+    /* ── Left: calculator panel ── */
     .keypad-pane {
       width: 200px;
       flex-shrink: 0;
@@ -109,17 +54,13 @@
       flex-direction: column;
       padding: 12px;
       gap: 8px;
-      position: sticky;
-      right: 0;
-      top: 0;
-      height: 100vh;
-      align-self: flex-start;
+      border-right: 1px solid #000;
+      height: 100%;
     }
 
     .keypad-display {
       border: 1px solid #000;
       padding: 8px 10px;
-      text-align: right;
       display: flex;
       align-items: baseline;
       justify-content: flex-end;
@@ -150,38 +91,121 @@
     button.active { background: #000; color: rgb(255, 97, 155); }
 
     .key-clear { grid-column: span 2; aspect-ratio: auto; padding: 8px 0; }
-    .key-dot { grid-column: span 1; aspect-ratio: auto; padding: 8px 0; color: rgb(255, 97, 155); }
+    .key-dot   { grid-column: span 1; aspect-ratio: auto; padding: 8px 0; color: rgb(255, 97, 155); }
 
+    /* ── Right: gallery panel ── */
+    .gallery-pane {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .gallery-label {
+      padding: 8px 12px;
+      border-bottom: 1px solid #000;
+      flex-shrink: 0;
+    }
+
+    .gallery-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    /* each named gallery is hidden until active */
+    .gallery { display: none; }
+    .gallery.active { display: grid; }
+
+    .gallery {
+      grid-template-columns: repeat(auto-fill, 200px);
+      gap: 8px;
+    }
+
+    /* ── Grid tile ── */
+    .tile {
+      width: 200px;
+      height: 200px;
+      background: #ddd;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .tile:hover img { transform: scale(1.07); }
+
+    /* placeholder colour shown when no img yet */
+    .tile-placeholder {
+      width: 100%;
+      height: 100%;
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #888;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Lightbox ── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    #lightbox-caption {
+      color: #fff;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── GIF overlay ── */
     #staticgif {
       position: absolute;
       width: 15em;
       transform: translate(-50%, -50%);
       top: 70%;
       left: 10%;
+      pointer-events: none;
     }
 
     /* ── Mobile ── */
     @media (max-width: 600px) {
-      body { flex-direction: column; }
-
-      .gallery-pane {
-        flex: 1;
-        border-right: none;
-        border-bottom: 1px solid #000;
-        min-height: 0;
-      }
-
-      .header { padding: 1em 2em; }
+      .main { flex-direction: column-reverse; }
 
       .keypad-pane {
         width: 100%;
-        height: 280px;
-        flex-shrink: 0;
+        height: 260px;
         flex-direction: row;
-        padding: 10px;
-        gap: 8px;
-        position: static;
-        align-self: auto;
+        border-right: none;
+        border-top: 1px solid #000;
       }
 
       .keypad-display {
@@ -205,203 +229,161 @@
   </style>
 </head>
 <body>
-  <div class="gallery-pane">
-    <div class="header">
-      <div class="banner">
-        <marquee behavior="alternate" direction="right"> PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! </marquee>
-      </div>
-    </div>
-    <div class="gallery-label" id="gallery-label"><b>Activity 1:</b> Unboxing...</div>
-    <div class="gallery-scroll">
 
-      <div class="gallery active" data-gallery="1" data-label="Unboxing...">
-        <div class="tile">
-          <img src="w6/unboxing Small.jpeg" alt="">
-          <span class="tile-label">img 1</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="2" data-label="Blink!">
-        <div class="tile">
-          <img src="w6/blink-01 Small.jpeg" alt="">
-          <span class="tile-label">img 1</span>
-        </div>
-        <div class="tile">
-          <img src="w6/blink-02 Small.jpeg" alt="">
-          <span class="tile-label">img 2</span>
-        </div>
-        <div class="tile">
-          <img src="w6/blink-03 Small.jpeg" alt="">
-          <span class="tile-label">img 3</span>
-        </div>
-        <div class="tile">
-          <img src="w6/blink-04 Small.jpeg" alt="">
-          <span class="tile-label">img 4</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="3" data-label="Buzz!">
-        <div class="tile">
-          <img src="w7/buzz-01 Small.jpeg" alt="">
-          <span class="tile-label">img 1</span>
-        </div>
-        <div class="tile">
-          <img src="w7/buzz-02 Small.jpeg" alt="">
-          <span class="tile-label">img 2</span>
-        </div>
-        <div class="tile">
-          <img src="w7/buzz-03 Small.jpeg" alt="">
-          <span class="tile-label">img 3</span>
-        </div>
-        <div class="tile">
-          <img src="w7/buzz-04 Small.jpeg" alt="">
-          <span class="tile-label">img 4</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="4" data-label="Chindogu Build">
-        <div class="tile">
-          <img src="w7/headphone-01 Small.jpeg" alt="">
-          <span class="tile-label">img 1</span>
-        </div>
-        <div class="tile">
-          <img src="w7/headphone-02 Small.jpeg" alt="">
-          <span class="tile-label">img 2</span>
-        </div>
-        <div class="tile">
-          <img src="w7/headphone.gif" alt="">
-          <span class="tile-label">img 3</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="5" data-label="Speculative Objects">
-        <div class="tile">
-          <img src="w8/sensory8s Small.jpeg" alt="">
-          <span class="tile-label">img 1</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="6" data-label="Plant Piano">
-        <div class="tile">
-          <img src="w8/plants Small.jpeg" alt="">
-          <span class="tile-label">img 1</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="7" data-label="Research">
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 1</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 2</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 3</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 4</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 5</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 6</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 7</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="8" data-label="Sketches">
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 1</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 2</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 3</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 4</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 5</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 6</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 7</span>
-        </div>
-      </div>
-
-      <div class="gallery" data-gallery="9" data-label="Reflection">
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 1</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 2</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 3</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 4</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 5</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 6</span>
-        </div>
-        <div class="tile">
-          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
-          <span class="tile-label">img 7</span>
-        </div>
-      </div>
-
+  <!-- Header -->
+  <div class="header">
+    <div class="banner">
+      <marquee behavior="alternate" direction="right"> PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! </marquee>
     </div>
   </div>
 
-  <div class="keypad-pane">
-    <div class="keypad-display">
-      <small>Activity</small>
-      <b id="display-num" style="font-size:1.4rem">1</b>
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Left: keypad -->
+    <div class="keypad-pane">
+      <div class="keypad-display">
+        <small>Activity</small>
+        <b id="display-num" style="font-size:1.4rem">1</b>
+      </div>
+      <div class="keypad-grid">
+        <button onclick="switchTo(7)">7</button>
+        <button onclick="switchTo(8)">8</button>
+        <button onclick="switchTo(9)">9</button>
+        <button onclick="switchTo(4)">4</button>
+        <button onclick="switchTo(5)">5</button>
+        <button onclick="switchTo(6)">6</button>
+        <button onclick="switchTo(1)" class="active">1</button>
+        <button onclick="switchTo(2)">2</button>
+        <button onclick="switchTo(3)">3</button>
+        <button class="key-clear" onclick="switchTo(1)">clear</button>
+        <a href="contents.html"><button class="key-dot">return</button></a>
+      </div>
     </div>
-    <div class="keypad-grid">
-      <button onclick="switchTo(7)">7</button>
-      <button onclick="switchTo(8)">8</button>
-      <button onclick="switchTo(9)">9</button>
-      <button onclick="switchTo(4)">4</button>
-      <button onclick="switchTo(5)">5</button>
-      <button onclick="switchTo(6)">6</button>
-      <button onclick="switchTo(1)" class="active">1</button>
-      <button onclick="switchTo(2)">2</button>
-      <button onclick="switchTo(3)">3</button>
-      <button class="key-clear" onclick="switchTo(1)">clear</button>
-      <a href="contents.html"><button class="key-dot">return</button></a>
+
+    <!-- Right: gallery -->
+    <div class="gallery-pane">
+      <div class="gallery-label" id="gallery-label"><b>Activity 1:</b> Unboxing...</div>
+      <div class="gallery-scroll">
+
+        <div class="gallery active" data-gallery="1" data-label="Unboxing...">
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w6/unboxing Small.jpeg" alt="Unboxing">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="2" data-label="Blink!">
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w6/blink-01 Small.jpeg" alt="Blink 1">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w6/blink-02 Small.jpeg" alt="Blink 2">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w6/blink-03 Small.jpeg" alt="Blink 3">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w6/blink-04 Small.jpeg" alt="Blink 4">
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="3" data-label="Buzz!">
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/buzz-01 Small.jpeg" alt="Buzz 1">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/buzz-02 Small.jpeg" alt="Buzz 2">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/buzz-03 Small.jpeg" alt="Buzz 3">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/buzz-04 Small.jpeg" alt="Buzz 4">
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="4" data-label="Chindogu Build">
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/headphone-01 Small.jpeg" alt="Headphone 1">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/headphone-02 Small.jpeg" alt="Headphone 2">
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w7/headphone.gif" alt="Headphone demo">
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="5" data-label="Speculative Objects">
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w8/sensory8s Small.jpeg" alt="Speculative Objects">
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="6" data-label="Plant Piano">
+          <div class="tile" onclick="openLightbox(this)">
+            <img src="w8/plants Small.jpeg" alt="Plant Piano">
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="7" data-label="Research">
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 1</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 2</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 3</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 4</div>
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="8" data-label="Sketches">
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 1</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 2</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 3</div>
+          </div>
+        </div>
+
+        <div class="gallery" data-gallery="9" data-label="Reflection">
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 1</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 2</div>
+          </div>
+          <div class="tile" onclick="openLightbox(this)">
+            <!-- INSERT IMG: <img src="your-image.jpg" alt="caption here"> -->
+            <div class="tile-placeholder">img 3</div>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption"></div>
   </div>
 
   <img id="staticgif" src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyYm9rd2x0ZzB1ZWx1ZmdveXY2Z240ZnZ5bGhlZzViZHJmYndpOTdlZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26tOYHUgZYoj2YKPe/200w.gif" alt="">
@@ -413,10 +395,23 @@
       next.classList.add('active');
       document.querySelector('.keypad-grid button.active').classList.remove('active');
       document.querySelectorAll('.keypad-grid button')[([7,8,9,4,5,6,1,2,3]).indexOf(n)].classList.add('active');
-      const label = next.dataset.label;
-      document.getElementById('gallery-label').innerHTML = '<b>Activity ' + n + ':</b> ' + label;
+      document.getElementById('gallery-label').innerHTML = '<b>Activity ' + n + ':</b> ' + next.dataset.label;
       document.getElementById('display-num').textContent = n;
     }
+
+    function openLightbox(tile) {
+      const img = tile.querySelector('img');
+      if (!img) return;
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-caption').textContent = img.alt;
+      document.getElementById('lightbox').classList.add('open');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>
