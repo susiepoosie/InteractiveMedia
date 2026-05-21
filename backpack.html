@@ -5,74 +5,81 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
         <style>
             canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
-            body{
-                z-index: 0;
-                background-color:black;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                pointer-events: none;
             }
-            .center {
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            body {
+                background-color: transparent;
             }
-
-
-
         </style>
     </head>
     
     <body>
-        <div class="center">
-            <a href="open.html"><img style="height: 70vh;" src="media/backpack-front.png" alt="Black backpack"></a>
-        </div>
-
         <script>
             let offscreen;
-    
-            function setup() {
-            let cnv = createCanvas(windowWidth, windowHeight);
-            cnv.style('position', 'fixed');
-            cnv.style('top', '0');
-            cnv.style('left', '0');
-            clear(); // start transparent
-            offscreen = createGraphics(windowWidth, windowHeight);
+            let bagImg;
+
+            function preload() {
+                bagImg = loadImage('media/backpack-front.png');
             }
-    
+
+            function setup() {
+                let cnv = createCanvas(windowWidth, windowHeight);
+                cnv.style('position', 'fixed');
+                cnv.style('top', '0');
+                cnv.style('left', '0');
+                offscreen = createGraphics(windowWidth, windowHeight);
+            }
+
             function draw() {
-            let mx = mouseX;
-            let my = mouseY;
-    
-            clear(); // transparent each frame instead of background(...)
-    
-            offscreen.clear();
-            let ctx = offscreen.drawingContext;
-    
-            offscreen.background(0, 0, 0, 255);
-    
-            let grad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
-            grad.addColorStop(0,    'rgba(0,0,0,0)');
-            grad.addColorStop(0.45, 'rgba(0,0,0,0)');
-            grad.addColorStop(1,    'rgba(0,0,0,1)');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, width, height);
-    
-            let warmGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
-            warmGrad.addColorStop(0,    'rgba(255,220,100,0.22)');
-            warmGrad.addColorStop(0.35, 'rgba(255,160,40,0.10)');
-            warmGrad.addColorStop(0.65, 'rgba(180,80,10,0.04)');
-            warmGrad.addColorStop(1,    'rgba(0,0,0,0)');
-            ctx.fillStyle = warmGrad;
-            ctx.fillRect(0, 0, width, height);
-    
-            image(offscreen, 0, 0);
+                let mx = mouseX;
+                let my = mouseY;
+
+                background(0);
+
+                let imgH = windowHeight * 0.7;
+                let imgW = bagImg.width * (imgH / bagImg.height);
+                image(bagImg, windowWidth / 2 - imgW / 2, windowHeight / 2 - imgH / 2, imgW, imgH);
+
+                offscreen.clear();
+                let ctx = offscreen.drawingContext;
+                offscreen.background(0, 0, 0, 255);
+
+                let grad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
+                grad.addColorStop(0,    'rgba(0,0,0,0)');
+                grad.addColorStop(0.45, 'rgba(0,0,0,0)');
+                grad.addColorStop(1,    'rgba(0,0,0,1)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, width, height);
+
+                let warmGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
+                warmGrad.addColorStop(0,    'rgba(255,220,100,0.22)');
+                warmGrad.addColorStop(0.35, 'rgba(255,160,40,0.10)');
+                warmGrad.addColorStop(0.65, 'rgba(180,80,10,0.04)');
+                warmGrad.addColorStop(1,    'rgba(0,0,0,0)');
+                ctx.fillStyle = warmGrad;
+                ctx.fillRect(0, 0, width, height);
+
+                image(offscreen, 0, 0);
+            }
+
+            function mousePressed() {
+                let imgH = windowHeight * 0.7;
+                let imgW = bagImg.width * (imgH / bagImg.height);
+                let x = windowWidth / 2 - imgW / 2;
+                let y = windowHeight / 2 - imgH / 2;
+                if (mouseX > x && mouseX < x + imgW && mouseY > y && mouseY < y + imgH) {
+                    window.location.href = 'open.html';
+                }
+            }
+
+            function windowResized() {
+                resizeCanvas(windowWidth, windowHeight);
+                offscreen = createGraphics(windowWidth, windowHeight);
             }
         </script>
-    
     </body>
 </html>
