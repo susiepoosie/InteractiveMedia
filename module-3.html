@@ -6,43 +6,32 @@
   <title>Module 3: Physical Computing</title>
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
   <style>
-    body{
-      display: flex;
-      background-color:rgb(255, 97, 155)
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; display: flex; }
+ 
+    body { background-color: rgb(255, 97, 155); }
+    
     .header {
-      outline: white;
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
       padding: 3em 8em;
+      flex-shrink: 0;
     }
+ 
     .banner {
-      position: relative;
       width: 100%;
-      height: 2%;
       background-color: rgb(122, 140, 131);
       border: 2px solid black;
       border-radius: 20px;
       font-family: "Bitcount Single", monospace;
-      font-optical-sizing: auto;
-      font-weight: 300;
-      font-style: normal;
-      font-variation-settings:
-        "slnt" 0,
-        "CRSV" 0.5,
-        "ELSH" 0,
-        "ELXP" 0;
       font-size: 5em;
+      font-weight: 300;
       display: flex;
       justify-content: center;
       align-items: center;
       color: black;
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; display: flex; }
 
     .gallery-pane {
       flex: 1;
@@ -152,17 +141,16 @@
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="banner">
-      <marquee behavior="alternate" direction="right"> PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! </marquee>
-    </div>
-  </div>
-
   <div class="gallery-pane">
-    <div class="gallery-label" id="gallery-label"><b>ACT_01:</b> Unboxing</div>
+    <div class="header">
+      <div class="banner">
+        <marquee behavior="alternate" direction="right"> PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! </marquee>
+      </div>
+    </div>
+    <div class="gallery-label" id="gallery-label"><b>Gallery 1</b> — Architecture</div>
     <div class="gallery-scroll">
    
-      <div class="gallery active" data-gallery="1" data-label="unboxing">
+      <div class="gallery active" data-gallery="1" data-label="Architecture">
         <div class="tile" style="height:160px"></div>
         <div class="tile" style="height:130px"></div>
         <div class="tile" style="height:180px"></div>
@@ -172,7 +160,7 @@
         <div class="tile" style="height:170px"></div>
       </div>
    
-      <div class="gallery" data-gallery="2" data-label="buzz">
+      <div class="gallery" data-gallery="2" data-label="Nature">
         <div class="tile" style="height:140px"></div>
         <div class="tile" style="height:170px"></div>
         <div class="tile" style="height:150px"></div>
