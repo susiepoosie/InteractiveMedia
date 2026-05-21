@@ -369,5 +369,33 @@
       };
     });
   </script>
+
+<script>
+  // another p5.js sketch in instance mode
+  new p5(function(p) {
+
+    p.setup = function() {
+      // Canvas size fits cover page div size
+      const page = document.getElementById('page-1');
+      const cnv = p.createCanvas(page.offsetWidth, page.offsetHeight);
+      cnv.parent('page-1');
+    };
+
+    p.draw = function() {
+      p.line(p.mouseX, p.mouseY);
+    };
+
+    p.mousePressed = function() {
+      p.background(p.random(256),p.random(256),p.random(256))
+    }
+
+    // Responsive canvas
+    p.windowResized = function() {
+      const page = document.getElementById('page-1');
+      p.resizeCanvas(page.offsetWidth, page.offsetHeight);
+    };
+  });
+</script>
+
 </body>
 </html>
