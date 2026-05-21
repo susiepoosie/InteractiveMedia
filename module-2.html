@@ -10,15 +10,6 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-    }
-
     /* All page content sits on top */
     #content {
       position: relative;
@@ -180,10 +171,11 @@
  
     #pen {
       position: absolute;
+      z-index: 0;
       height: 40vh;
       transform: translate(-50%, -50%);
       bottom: 20px;
-      left: 90%;
+      left: 80%;
     }
   </style>
 </head>
