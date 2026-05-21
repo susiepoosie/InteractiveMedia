@@ -34,33 +34,6 @@
       font-size: medium;
     }
 
-    .gallery {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    scroll-snap-type: x mandatory;
-  }
-  .gallery > * {
-    flex: 0 0 300px;
-    aspect-ratio: 1;
-    scroll-snap-align: start;
-  }
-  .gallery-item {
-    position: relative;
-    overflow: hidden;
-  }
-  .caption {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: rgba(0,0,0,0.7); color: white;
-    padding: 0.5rem; transform: translateY(100%);
-    transition: 0.3s; font-size: 0.8rem;
-  }
-  .gallery-item:hover .caption {
-    transform: translateY(0);
-  }
-
     /* ── Book container ── */
     .book {
       position: relative;
@@ -183,6 +156,33 @@
       padding: 0;
       overflow: hidden;
     }
+
+    .gallery {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+  }
+  .gallery > * {
+    flex: 0 0 300px;
+    aspect-ratio: 1;
+    scroll-snap-align: start;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+  }
+  .caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.7); color: white;
+    padding: 0.5rem; transform: translateY(100%);
+    transition: 0.3s; font-size: 0.8rem;
+  }
+  .gallery-item:hover .caption {
+    transform: translateY(0);
+  }
 
   </style>
 
