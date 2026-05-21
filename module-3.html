@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100vw; height: 100%; display: flex; }
+    html, body { width: 100%; height: 100%; overflow: hidden; display: flex; }
 
     body { background-color: rgb(255, 97, 155); }
 
@@ -58,36 +58,25 @@
 
     .gallery {
       display: none;
-      position: relative;
+      flex-direction: row;
+      align-items: stretch;
       height: 100%;
+      gap: 4px;
     }
 
-    .gallery.active {
-      display: block;
-    }
+    .gallery.active { display: flex; }
 
-    /* Each tile is absolutely positioned from its left edge.
-       JS sets --left and --sliver-width on each tile.        */
     .tile {
-      position: absolute;
-      top: 0;
-      left: var(--left);
-      width: var(--sliver-width);
+      flex: 0 0 35px;
       height: 100%;
       background: #ddd;
       overflow: hidden;
       cursor: pointer;
-      transition: none;
-      z-index: 1;
+      position: relative;
     }
 
-    .tile:hover {
-      width: var(--expand-width);
-      left: var(--expand-left);
-      z-index: 10;
-    }
+    .tile:hover { flex: 0 0 500px; }
 
-    /* the image inside fills the tile */
     .tile-img {
       position: absolute;
       inset: 0;
@@ -97,7 +86,6 @@
       display: block;
     }
 
-    /* label shown vertically on the sliver */
     .tile-label {
       position: absolute;
       bottom: 8px;
@@ -109,12 +97,9 @@
       letter-spacing: 0.08em;
       color: #555;
       pointer-events: none;
-      transition: opacity 0.2s;
     }
 
-    .tile:hover .tile-label {
-      opacity: 0;
-    }
+    .tile:hover .tile-label { opacity: 0; }
 
     /* ── Keypad ── */
     .keypad-pane {
@@ -156,22 +141,10 @@
     }
 
     button:hover { background: #ffd2e6; }
+    button.active { background: #000; color: rgb(255, 97, 155); }
 
-    button.active {
-      background: #000;
-      color: rgb(255, 97, 155);
-    }
-
-    .key-clear {
-      grid-column: span 2;
-      aspect-ratio: auto;
-      padding: 8px 0;
-    }
-
-    .key-dot {
-      grid-column: span 1;
-      color: rgb(255, 97, 155);
-    }
+    .key-clear { grid-column: span 2; aspect-ratio: auto; padding: 8px 0; }
+    .key-dot { grid-column: span 1; color: rgb(255, 97, 155); }
 
     #staticgif {
       position: absolute;
@@ -234,93 +207,282 @@
     <div class="gallery-scroll">
 
       <div class="gallery active" data-gallery="1" data-label="Unboxing...">
-        <div class="tile" style="background:#c8c8c8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#b8b8b8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#d0d0d0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#c0c0c0"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#cacaca"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#b0b0b0"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#d8d8d8"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="2" data-label="Blink!">
-        <div class="tile" style="background:#ffd2e6"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#ffb8d4"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#ffc0dc"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#ffa8cc"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#ffd8e8"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#ffb0d0"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#ffcce4"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="3" data-label="Buzz!">
-        <div class="tile" style="background:#c8d4c8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#b8ccb8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#d0d8d0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#c0ccc0"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#bad0ba"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#c4d4c4"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#aec8ae"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="4" data-label="Chindogu Build">
-        <div class="tile" style="background:#e8e0c8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#d8d0b8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#e0d8c0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#ccc4ac"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#dcd4bc"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#e4dcc4"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#d4ccb4"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="5" data-label="Speculative Objects">
-        <div class="tile" style="background:#c8c8e8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#b8b8d8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#d0d0f0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#c0c0e0"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#cacaea"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#b4b4d4"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#d4d4f4"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="6" data-label="Plant Piano">
-        <div class="tile" style="background:#c8e0c8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#b8d0b8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#d0e8d0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#c0d8c0"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#aed0ae"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#c4dcc4"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#b8d8b8"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="7" data-label="Research">
-        <div class="tile" style="background:#e8d0c8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#d8c0b8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#e0c8c0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#ccb8b0"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#dcc8c0"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#e4d0c8"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#d4c0b8"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="8" data-label="Sketches">
-        <div class="tile" style="background:#e8e8e8"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#d8d8d8"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#f0f0f0"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#e0e0e0"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#eaeaea"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#d0d0d0"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#ececec"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
       <div class="gallery" data-gallery="9" data-label="Reflection">
-        <div class="tile" style="background:#e0c8e0"><span class="tile-label">img 1</span></div>
-        <div class="tile" style="background:#d0b8d0"><span class="tile-label">img 2</span></div>
-        <div class="tile" style="background:#e8d0e8"><span class="tile-label">img 3</span></div>
-        <div class="tile" style="background:#d8c0d8"><span class="tile-label">img 4</span></div>
-        <div class="tile" style="background:#cbb8cb"><span class="tile-label">img 5</span></div>
-        <div class="tile" style="background:#ddc8dd"><span class="tile-label">img 6</span></div>
-        <div class="tile" style="background:#d3bbd3"><span class="tile-label">img 7</span></div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 1</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 2</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 3</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 4</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 5</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 6</span>
+        </div>
+        <div class="tile">
+          <!-- INSERT IMG: <img class="tile-img" src="your-image.jpg" alt=""> -->
+          <span class="tile-label">img 7</span>
+        </div>
       </div>
 
     </div>
@@ -349,49 +511,16 @@
   <img id="staticgif" src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyYm9rd2x0ZzB1ZWx1ZmdveXY2Z240ZnZ5bGhlZzViZHJmYndpOTdlZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26tOYHUgZYoj2YKPe/200w.gif" alt="">
 
   <script>
-    const SLIVER = 35;
-    const GAP = 4;
-    const MAX_EXPAND = 500;
-
-    function layoutTiles(gallery) {
-      const tiles = gallery.querySelectorAll('.tile');
-      const total = gallery.offsetWidth;
-      tiles.forEach((tile, i) => {
-        const left = i * (SLIVER + GAP);
-        const center = left + SLIVER / 2;
-        // expand symmetrically from center, clamped to container
-        let eLeft = center - MAX_EXPAND / 2;
-        let eRight = center + MAX_EXPAND / 2;
-        if (eLeft < 0) { eRight -= eLeft; eLeft = 0; }
-        if (eRight > total) { eLeft -= (eRight - total); eRight = total; eLeft = Math.max(0, eLeft); }
-        const expandWidth = eRight - eLeft;
-        tile.style.setProperty('--left', left + 'px');
-        tile.style.setProperty('--sliver-width', SLIVER + 'px');
-        tile.style.setProperty('--expand-left', eLeft + 'px');
-        tile.style.setProperty('--expand-width', expandWidth + 'px');
-      });
-    }
-
     function switchTo(n) {
       document.querySelector('.gallery.active').classList.remove('active');
       const next = document.querySelector('[data-gallery="' + n + '"]');
       next.classList.add('active');
-      layoutTiles(next);
       document.querySelector('.keypad-grid button.active').classList.remove('active');
       document.querySelectorAll('.keypad-grid button')[([7,8,9,4,5,6,1,2,3]).indexOf(n)].classList.add('active');
       const label = next.dataset.label;
       document.getElementById('gallery-label').innerHTML = '<b>Activity ' + n + ':</b> ' + label;
       document.getElementById('display-num').textContent = n;
     }
-
-    // Initial layout
-    layoutTiles(document.querySelector('.gallery.active'));
-
-    // Re-layout on resize
-    window.addEventListener('resize', () => {
-      const active = document.querySelector('.gallery.active');
-      if (active) layoutTiles(active);
-    });
   </script>
 </body>
 </html>
