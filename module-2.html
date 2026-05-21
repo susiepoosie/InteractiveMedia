@@ -48,7 +48,7 @@
  
     #icon { width: 20px; height: 20px; }
  
-    figcaption { font-weight: 500; margin: 3em; }
+    figcaption { font-weight: 500; margin-top: 1em; margin-bottom: 2em;}
  
     /* ── Book container ── */
     .book {
@@ -193,13 +193,13 @@
 
       <h1>Research</h1>
       <br>
-      <h3>Mirror, Mirror: Gather 3 examples of reflection/webcam works.</h3>
-      
+
       <figure>
         <img src="https://www.designboom.com/twitterimages/uploads/2019/01/handson-facebook-interactive-facial-recognition-book-story-designboom-1200.jpg" alt="">
         <figcaption>facebook by Lim Si Ping (Handson), 2019</figcaption>
       </figure>
       <p>facebook' is an interactive installation that uses facial recognition technology to track the reader's personal data through multiple search engines, filling in a narrative template on its back-end to develop, in real time, a story tailored to the individual. It comprises of a physical book and two web cameras, one that tracks the user's page flipping motion, to project new content onto each new spread, and a second which constantly traces their face to derive data to be injected into the story. Depending on the user, details of the storyline will be completely different, including their name, age, occupation, location and relationships. Created in "dialogue with big brother", the work examines the role of social media, the digital footprint, data privacy.</p>
+      <br>
 
       <figure>
         <img src="https://i0.wp.com/pluginhuman.com/wp-content/uploads/2021/02/PluginHUMAN_Betty-Sargeant_Justin-Dwyer_Real-Time-Art_2.jpg?resize=750%2C463&ssl=1" alt="">
@@ -211,6 +211,7 @@
         <figcaption>Learning to See Series by Memo Atken, Ongoing</figcaption>
       </figure>
       <p>An ongoing collection of works that uses machine learning and AI to produce live image interpretations of the real world, through filters of its learned image dataset. The result is these dream-like artistic interpretations of mundane reality, making us question how we make sense of the world, our own consciousness influenced by expectations and existing beliefs. I found the creative and philosophical application of ML and AI especially refreshing, as it urged me to consider future implications of such technology on the way we experience the world.</p>
+      <br>
 
       <figure>
         <img src="https://www.forma.org.uk/assets/_large/datamatics03.jpg" alt="">
@@ -218,32 +219,32 @@
       </figure>
 
       <figure>
-        <img src="https://www.forma.org.uk/assets/_large/datamatics03.jpg" alt="">
-        <figcaption>datamatics by Ryoji Ikeda, 2006</figcaption>
+        <img src="https://www.marpi.studio/images/b/d/7/1/1/bd7113d6e2b7d2784b035876ecab12de0ac7e525-nn6.jpg" alt="">
+        <figcaption>New Nature by Marpi Studio, 2008</figcaption>
+      </figure>
+      <p>"Inspired by biology, ecology, and the underlying mathematics of the natural world, New Nature is an ever-unfolding digital world of speculative creatures and landscapes." Installed at ARTECHOUSE in Washington, DC, from October 2018 - January 2019, New Nature was a digital world of creatures, powered by complex algorithms to mimic the lifelike behaviours of the natural world. These alien organisms detect and respond to audience interactions including touch, approach and movement. The full exhibition comprised four rooms, surround projections, LED structures, responsive floors and 13 interactive terrarium stations. This inspired me to further examine how digital media can creatively reflect and potentially immortalise aspects of nature.</p>
+      <br>
+
+      <figure>
+        <img src="https://media.tate.org.uk/art/images/work/P/P02/P02295_10.jpg" alt="">
+        <figcaption>'Untitled' by Harold Cohen, 1972</figcaption>
       </figure>
 
-      
     </div>
 
     <div class="page" id="page-2">
       <h1>Interactivities</h1>
+      <br>
+
         <h3>Act_01: Offline Algorithmic Thinking</h3>
         <h3>Act_02: Let's GO!!!</h3>
+        <p>A couple simple experimental p5.js sketches to familiarise with using Processing.</p>
 
-      <h2>Homework</h2>
-      <p>A couple simple experimental p5.js sketches to familiarise with using Processing.</p>
         <h3>drawSnoopy.js</h3>
-
-      <h2>Workbook Progression</h2>
-      <h2>Reflection</h2>
-      
-        <h3>datamatics by Ryoji Ikeda, 2006</h3>
-        <p></p>
-
-        <h3>New Nature by Marpi Studio, 2008</h3>
-        <p>"Inspired by biology, ecology, and the underlying mathematics of the natural world, New Nature is an ever-unfolding digital world of speculative creatures and landscapes." Installed at ARTECHOUSE in Washington, DC, from October 2018 - January 2019, New Nature was a digital world of creatures, powered by complex algorithms to mimic the lifelike behaviours of the natural world. These alien organisms detect and respond to audience interactions including touch, approach and movement. The full exhibition comprised four rooms, surround projections, LED structures, responsive floors and 13 interactive terrarium stations. This inspired me to further examine how digital media can creatively reflect and potentially immortalise aspects of nature.</p>
-
-        <h3>Untitled, Bathers Series by Harold Cohen, 1986</h3>
+          <figure><img src="w4/drawSnoopy/drawsnoopy-code.jpg" alt=""><figcaption>p5.js code for drawSnoopy</figcaption></figure>
+          <figure><img src="w4/drawSnoopy/drawsnoopy-01 Small.jpeg" alt=""></figure>
+          <figure><img src="w4/drawSnoopy/drawsnoopy-02 Small.jpeg" alt=""></figure>
+          <figure><img src="w4/drawSnoopy/drawsnoopy-03 Small.jpeg" alt=""></figure>
 
         <h3>Act_01: So Random</h3>
         <h3>Act_02: User Input</h3>
@@ -399,7 +400,7 @@
       p.draw = function() {
         if (!p.mouseIsPressed) { pressedDuration = 0; return; }
         pressedDuration++;
-        const weight = p.min(pressedDuration * 0.08, 12); // ← 0.08 = thickening speed, 12 = max stroke weight
+        const weight = p.min(pressedDuration * 0.08, 12);
         p.strokeWeight(weight);
         p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       };
