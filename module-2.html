@@ -10,6 +10,28 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+
+    /* All page content sits on top */
+    #content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: sans-serif;
+    }
+    
     body {
       min-height: 100vh;
       background: rgb(217, 217, 217);
@@ -148,17 +170,14 @@
     .nav button:hover    { background: #888; color: #fff; }
     .nav button:disabled { opacity: 0.2; cursor: default; }
  
-    /* ── Webcam page ── */
     #page-0 { padding: 0; overflow: hidden; }
  
-    /* ── Drawing canvas sits on top of page-1 content ── */
     #page-1 { position: absolute; }
  
     #drawing-canvas {
       position: absolute;
       inset: 0;
       z-index: 10;
-      /* transparent — content underneath stays visible */
     }
  
     #pen {
@@ -171,8 +190,7 @@
   </style>
 </head>
 <body>
-  <img id="pen" src="https://stationerypal.com/cdn/shop/files/MujiSmoothWritingGelPen0.5mm-Black_2.png?v=1689563610" alt="">
-
+<div class="content">
   <div class="book">
     <div class="spine"></div>
 
@@ -181,11 +199,9 @@
     <div class="page" id="page-1">
       <!-- Drawing canvas is injected here by p5 — it floats above this content -->
 
-      <h1>Week 4</h1>
-      <p>Module B: Creative Coding</p>
-
-      <h2>Hunt'n'Gather</h2>
-      <p>Mirror, Mirror: Gather 3 examples of reflection/webcam works.</p>
+      <h1>Research</h1>
+      <br>
+      <h3>Mirror, Mirror: Gather 3 examples of reflection/webcam works.</h3>
       
       <figure>
         <img src="https://www.designboom.com/twitterimages/uploads/2019/01/handson-facebook-interactive-facial-recognition-book-story-designboom-1200.jpg" alt="">
@@ -262,6 +278,47 @@
       <button id="next">→</button>
     </div>
   </div>
+
+  <img id="pen" src="https://stationerypal.com/cdn/shop/files/MujiSmoothWritingGelPen0.5mm-Black_2.png?v=1689563610" alt="">
+</div>
+
+  <script>
+    let x, y, xspeed = 5, yspeed = 2, r = 25;
+let ballColor;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  x = width / 2;
+  y = height / 2;
+  ballColor = color(255); // start white
+}
+
+function draw() {
+  background(0);
+  fill(ballColor);
+  noStroke();
+  ellipse(x, y, r * 2, r * 2);
+  x += xspeed;
+  y += yspeed;
+
+  if (x > width - r || x < r) {
+    xspeed = -xspeed;
+    ballColor = randomColor();
+  }
+  if (y > height - r || y < r) {
+    yspeed = -yspeed;
+    ballColor = randomColor();
+  }
+}
+
+function randomColor() {
+  return color(random(255), random(255), random(255));
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+  </script>
 
   <script>
     // Page navigation
