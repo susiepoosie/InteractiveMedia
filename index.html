@@ -15,7 +15,7 @@
         }
 
         body {
-            background-color: black;
+            background-color: transparent;
             position: relative;
             font-family: "Share Tech Mono";
             font-weight: 400;
@@ -61,14 +61,14 @@
         let mx = mouseX;
         let my = mouseY;
 
-        clear();
+    
 
-        // Draw the backpack image onto the main canvas first
+        background(0);
+
         let imgH = windowHeight * 0.4;
         let imgW = bagImg.width * (imgH / bagImg.height);
         image(bagImg, windowWidth / 2 - imgW / 2, windowHeight / 2 - imgH / 2, imgW, imgH);
 
-        // Then draw the darkness mask on top
         offscreen.clear();
         let ctx = offscreen.drawingContext;
         offscreen.background(0, 0, 0, 255);
@@ -92,7 +92,6 @@
         }
 
         function mousePressed() {
-        // check if click is roughly over the image
         let imgH = windowHeight * 0.4;
         let imgW = bagImg.width * (imgH / bagImg.height);
         let x = windowWidth / 2 - imgW / 2;
