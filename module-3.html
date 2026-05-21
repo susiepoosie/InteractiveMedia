@@ -15,14 +15,15 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      padding: 1em 8em;
+      padding: 3em 8em;
     }
     .banner {
       position: relative;
       width: 100%;
       height: 2%;
-      background-color: rgb(114, 114, 114);
+      background-color: rgb(122, 140, 131);
       border: 2px solid black;
+      border-radius: 1em;
       font-family: "Bitcount Single", monospace;
       font-optical-sizing: auto;
       font-weight: 300;
@@ -37,6 +38,17 @@
       justify-content: center;
       align-items: center;
       color: black;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      gap: 1rem;
+    }
+    .gallery > *:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s;
+      cursor: pointer;
     }
 
     #staticgif {
@@ -54,7 +66,21 @@
     <div class="banner">
       <marquee behavior="alternate" direction="right"> PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! PHYSICAL COMPUTING !!! </marquee>
     </div>
+  </div>
 
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="w6/blink-01 Small.jpeg" alt="">
+    </div>
+    <div class="gallery-item">
+      <img src="w6/blink-02 Small.jpeg" alt="">
+    </div>
+    <div class="gallery-item">
+      <img src="w6/blink-03 Small.jpeg" alt="">
+    </div>
+    <div class="gallery-item">
+      <img src="w6/blink-04 Small.jpeg" alt="">
+    </div>
   </div>
 
   <div>
