@@ -14,16 +14,17 @@
     body {
       display: flex;
       flex-direction: column;
-      background-color: rgb(255, 189, 213);
+      background-color: black;
       font-family: "Quantico", sans-serif;
       font-weight: 400;
       font-style: normal;
+      color: white;
     }
 
     /* ── Header banner ── */
     .header {
       display: flex;
-      background-color: black;
+      background-color: rgb(255, 97, 155);
       justify-content: center;
       align-items: center;
       padding: 1em 3em;
@@ -34,7 +35,7 @@
     .banner {
       width: 100%;
       background-color: rgb(122, 140, 131);
-      border: 2px solid rgb(255, 97, 155);
+      border: 2px solid black;
       border-radius: 20px;
       font-family: "Bitcount Single", monospace;
       font-size: clamp(1.2rem, 3vw, 3.5em);
@@ -42,7 +43,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
+      color: black;
     }
 
     /* ── Main content row ── */
@@ -103,7 +104,7 @@
       min-height: 0;
     }
 
-    button:hover { background: #ffd2e6; }
+    button:hover { background: #ffe8f3; }
     button.active { background: #000; color: rgb(255, 97, 155); }
 
     .key-clear { grid-column: span 2; aspect-ratio: auto; padding: 8px 0; }
@@ -114,7 +115,7 @@
     .gallery-pane {
       flex: 1 1 0;
       min-width: 0;
-      max-width: calc(100% - 550px);
+      max-width: calc(100% - 220px);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -210,10 +211,10 @@
     /* ── GIF overlay ── */
     #staticgif {
       position: absolute;
-      width: 15em;
+      width: 220px;
       bottom: 0%;
       left: 0%;
-      pointer-events: none;
+      cursor: crosshair;
     }
 
     /* ── Mobile ── */
