@@ -10,13 +10,12 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 0;
-            pointer-events: none;  /* ADD THIS */
+            z-index: -1;
+            pointer-events: none;
             }
 
         body {
             background-color: black;
-            z-index: 1;
             position: relative;
             font-family: "Share Tech Mono";
             font-weight: 400;
@@ -26,6 +25,7 @@
         }
 
         .center {
+            z-index: 1;
             display: flex;
             justify-content: center;
             align-items: center;
