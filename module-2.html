@@ -22,7 +22,7 @@
       font-size: 1em;
       margin: 3em;
     }
-
+ 
     h1 {
       font-family: "Gochi Hand", cursive;
       font-weight: 400;
@@ -30,22 +30,22 @@
       font-variant: small-caps;
       font-size: 3em;   
     }
-
+ 
     h2 { font-size: 2em; }
-
+ 
     img { max-width: 600px; }
-
+ 
     #icon { width: 20px; height: 20px; }
-
+ 
     figcaption { font-weight: 500; margin: 3em; }
-
+ 
     /* ── Book container ── */
     .book {
       position: relative;
       width: 620px;
       height: 480px;
     }
-
+ 
     /* ── Spine on the left ── */
     .spine {
       position: absolute;
@@ -57,7 +57,7 @@
       border-radius: 3px 0 0 3px;
       box-shadow: -3px 3px 10px rgba(0,0,0,0.5);
     }
-
+ 
     /* ── Stacked pages effect ── */
     .book::before {
       content: '';
@@ -68,7 +68,7 @@
       transform: translate(6px, 6px);
       box-shadow: 4px 4px 14px rgba(0,0,0,0.35);
     }
-
+ 
     /* ── Individual pages ── */
     .page {
       position: absolute;
@@ -80,17 +80,17 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
-
+ 
     .page.active { display: block; }
-
+ 
     /* ── Flip animation ── */
     @keyframes flip-in {
       from { clip-path: inset(0 100% 0 0); }
       to   { clip-path: inset(0 0% 0 0); }
     }
-
+ 
     .page.flip-in { animation: flip-in 0.3s ease both; }
-
+ 
     /* ── Tabs on the right ── */
     .tabs {
       position: absolute;
@@ -100,7 +100,7 @@
       flex-direction: column;
       gap: 6px;
     }
-
+ 
     .tab {
       width: 38px;
       height: 60px;
@@ -115,15 +115,15 @@
       box-shadow: 3px 2px 8px rgba(0,0,0,0.3);
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
+ 
     .tab:hover  { transform: translateX(4px); }
     .tab.active { transform: translateX(7px); box-shadow: 5px 2px 12px rgba(0,0,0,0.4); }
-
+ 
     .tab:nth-child(1) { background: #cfcfcf; }
     .tab:nth-child(2) { background: #919191; }
     .tab:nth-child(3) { background: #dadada; }
     .tab:nth-child(4) { background: #a9a9a9; }
-
+ 
     /* ── Prev / Next arrows ── */
     .nav {
       position: absolute;
@@ -132,7 +132,7 @@
       display: flex;
       gap: 8px;
     }
-
+ 
     .nav button {
       background: none;
       border: 1px solid #aaa;
@@ -144,23 +144,23 @@
       color: #888;
       transition: background 0.15s, color 0.15s;
     }
-
+ 
     .nav button:hover    { background: #888; color: #fff; }
     .nav button:disabled { opacity: 0.2; cursor: default; }
-
+ 
     /* ── Webcam page ── */
     #page-0 { padding: 0; overflow: hidden; }
-
+ 
     /* ── Drawing canvas sits on top of page-1 content ── */
     #page-1 { position: absolute; }
-
+ 
     #drawing-canvas {
       position: absolute;
       inset: 0;
       z-index: 10;
       /* transparent — content underneath stays visible */
     }
-
+ 
     #pen {
       position: absolute;
       width: 300px;
@@ -264,7 +264,7 @@
   </div>
 
   <script>
-    // ── Page navigation ──
+    // Page navigation
     let current = 0;
     const pages = document.querySelectorAll('.page');
     const tabs  = document.querySelectorAll('.tab');
@@ -294,7 +294,7 @@
   </script>
 
   <script>
-    // ── Page 0: webcam with threshold + invert ──
+    // webcam with threshold + invert
     new p5(function(p) {
       let capture;
 
@@ -321,11 +321,13 @@
     });
   </script>
 
-  <script>
-    // ── Page 1: drawing overlay ──
-    // The canvas is transparent so the page content (text, images) shows through.
-    // Hold and drag to draw; stroke weight grows the longer you hold.
-    // Double-click to clear drawings.
+<script>
+  let drawingSketchReady = false;
+
+  function initDrawingSketch() {
+    if (drawingSketchReady) return;
+    drawingSketchReady = true;
+
     new p5(function(p) {
       let pressedDuration = 0;
 
@@ -334,13 +336,13 @@
         const cnv  = p.createCanvas(page.offsetWidth, page.offsetHeight);
         cnv.parent('page-1');
 
-        // Float above the page content
+        // Float above page content, transparent background
         cnv.style('position', 'absolute');
         cnv.style('top', '0');
         cnv.style('left', '0');
         cnv.style('z-index', '10');
 
-        p.clear(); // transparent — text and images remain visible underneath
+        p.clear();
         p.strokeCap(p.ROUND);
         p.stroke(30, 30, 30, 180);
       };
@@ -348,15 +350,13 @@
       p.draw = function() {
         if (!p.mouseIsPressed) { pressedDuration = 0; return; }
         pressedDuration++;
-        const weight = p.min(pressedDuration * 0.08, 12);
+        const weight = p.min(pressedDuration * 0.08, 12); // ← 0.08 = thickening speed, 12 = max stroke weight
         p.strokeWeight(weight);
         p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       };
 
-      p.mouseReleased = function() { pressedDuration = 0; };
-
-      // Double-click to clear
-      p.doubleClicked = function() { p.clear(); };
+      p.mouseReleased  = function() { pressedDuration = 0; };
+      p.doubleClicked  = function() { p.clear(); };  // double-click to clear
 
       p.windowResized = function() {
         const page = document.getElementById('page-1');
@@ -364,7 +364,18 @@
         p.clear();
       };
     });
-  </script>
+  }
+</script>
+
+<script>
+  const _goTo = goTo;
+  goTo = function(next) {
+    _goTo(next);
+    if (next === 1) {
+      requestAnimationFrame(() => requestAnimationFrame(initDrawingSketch));
+    }
+  };
+</script>
 
 </body>
 </html>
