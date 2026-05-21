@@ -53,14 +53,19 @@
 
                 offscreen.clear();
                 let ctx = offscreen.drawingContext;
-                offscreen.background(0, 0, 0, 255);
 
+                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.globalCompositeOperation = 'destination-out';
                 let grad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
-                grad.addColorStop(0,    'rgba(0,0,0,0)');
-                grad.addColorStop(0.45, 'rgba(0,0,0,0)');
-                grad.addColorStop(1,    'rgba(0,0,0,1)');
+                grad.addColorStop(0,    'rgba(0,0,0,1)');
+                grad.addColorStop(0.45, 'rgba(0,0,0,1)');
+                grad.addColorStop(1,    'rgba(0,0,0,0)');
                 ctx.fillStyle = grad;
                 ctx.fillRect(0, 0, width, height);
+
+                ctx.globalCompositeOperation = 'source-over';
 
                 let warmGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
                 warmGrad.addColorStop(0,    'rgba(255,220,100,0.22)');
@@ -69,6 +74,8 @@
                 warmGrad.addColorStop(1,    'rgba(0,0,0,0)');
                 ctx.fillStyle = warmGrad;
                 ctx.fillRect(0, 0, width, height);
+
+                image(offscreen, 0, 0);
 
                 image(offscreen, 0, 0);
             }
