@@ -7,16 +7,22 @@
     
     <style>
         canvas {
-            z-index: -1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
-        body{
+
+        body {
             z-index: 1;
+            position: relative;
             font-family: "Share Tech Mono";
             font-weight: 400;
             font-style: normal;
-            font-size: 2em;
+            font-size: small;
             cursor: url(media/flashlight.png);
         }
+        
         .center {
             display: flex;
             justify-content: center;
@@ -40,11 +46,17 @@
         let offscreen;
 
 function setup() {
-  createCanvas(680, 400);
-  offscreen = createGraphics(680, 400);
+  let cnv = createCanvas(windowWidth, windowHeight);
+  cnv.style('position', 'fixed');
+  cnv.style('top', '0');
+  cnv.style('left', '0');
+  offscreen = createGraphics(windowWidth, windowHeight);
 }
 
 function draw() {
+  let mx = mouseX;
+  let my = mouseY;
+
   background(15, 10, 5);
 
   offscreen.clear();
@@ -54,9 +66,8 @@ function draw() {
 
   let grad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
   grad.addColorStop(0,    'rgba(0,0,0,0)');
-  grad.addColorStop(0.45, 'rgba(0,0,0,0)');  // fully lit core
-  grad.addColorStop(1,    'rgba(0,0,0,1)');  // total darkness at edge
-
+  grad.addColorStop(0.45, 'rgba(0,0,0,0)');
+  grad.addColorStop(1,    'rgba(0,0,0,1)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, width, height);
 
@@ -69,6 +80,11 @@ function draw() {
   ctx.fillRect(0, 0, width, height);
 
   image(offscreen, 0, 0);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  offscreen = createGraphics(windowWidth, windowHeight);
 }
     </script>
 </body>
