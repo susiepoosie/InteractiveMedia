@@ -2,17 +2,26 @@
 <html>
     <head>
         <title>Susan's bag</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
         <style>
+            canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
             body{
-                background:radial-gradient(white,pink);
+                background:black;
             }
             .center {
+            z-index: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             }
             img{
-                height: 100vh;
+                height: 60vh;
             }
         </style>
     </head>
@@ -21,5 +30,48 @@
         <div class="center">
             <a href="open.html"><img src="media/backpack-front.png" alt="Black backpack"></a>
         </div>
+
+        <script>
+            let offscreen;
+    
+            function setup() {
+            let cnv = createCanvas(windowWidth, windowHeight);
+            cnv.style('position', 'fixed');
+            cnv.style('top', '0');
+            cnv.style('left', '0');
+            clear(); // start transparent
+            offscreen = createGraphics(windowWidth, windowHeight);
+            }
+    
+            function draw() {
+            let mx = mouseX;
+            let my = mouseY;
+    
+            clear(); // transparent each frame instead of background(...)
+    
+            offscreen.clear();
+            let ctx = offscreen.drawingContext;
+    
+            offscreen.background(0, 0, 0, 255);
+    
+            let grad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
+            grad.addColorStop(0,    'rgba(0,0,0,0)');
+            grad.addColorStop(0.45, 'rgba(0,0,0,0)');
+            grad.addColorStop(1,    'rgba(0,0,0,1)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+    
+            let warmGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
+            warmGrad.addColorStop(0,    'rgba(255,220,100,0.22)');
+            warmGrad.addColorStop(0.35, 'rgba(255,160,40,0.10)');
+            warmGrad.addColorStop(0.65, 'rgba(180,80,10,0.04)');
+            warmGrad.addColorStop(1,    'rgba(0,0,0,0)');
+            ctx.fillStyle = warmGrad;
+            ctx.fillRect(0, 0, width, height);
+    
+            image(offscreen, 0, 0);
+            }
+        </script>
+    
     </body>
 </html>
