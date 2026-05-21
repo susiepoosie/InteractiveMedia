@@ -31,23 +31,13 @@
       font-size: 3em;   
     }
 
-    h2 {
-      font-size: 2em;
-    }
+    h2 { font-size: 2em; }
 
-    img {
-      max-width: 600px;
-    }
+    img { max-width: 600px; }
 
-    #icon {
-      width: 20px;
-      height: 20px;
-    }
+    #icon { width: 20px; height: 20px; }
 
-    figcaption {
-      font-weight: 500;
-      margin: 3em;
-    }
+    figcaption { font-weight: 500; margin: 3em; }
 
     /* ── Book container ── */
     .book {
@@ -91,9 +81,7 @@
       overflow-y: auto;
     }
 
-    .page.active {
-      display: block;
-    }
+    .page.active { display: block; }
 
     /* ── Flip animation ── */
     @keyframes flip-in {
@@ -101,9 +89,7 @@
       to   { clip-path: inset(0 0% 0 0); }
     }
 
-    .page.flip-in {
-      animation: flip-in 0.3s ease both;
-    }
+    .page.flip-in { animation: flip-in 0.3s ease both; }
 
     /* ── Tabs on the right ── */
     .tabs {
@@ -130,16 +116,9 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .tab:hover {
-      transform: translateX(4px);
-    }
+    .tab:hover  { transform: translateX(4px); }
+    .tab.active { transform: translateX(7px); box-shadow: 5px 2px 12px rgba(0,0,0,0.4); }
 
-    .tab.active {
-      transform: translateX(7px);
-      box-shadow: 5px 2px 12px rgba(0,0,0,0.4);
-    }
-
-    /* Tab colours */
     .tab:nth-child(1) { background: #cfcfcf; }
     .tab:nth-child(2) { background: #919191; }
     .tab:nth-child(3) { background: #dadada; }
@@ -166,12 +145,20 @@
       transition: background 0.15s, color 0.15s;
     }
 
-    .nav button:hover { background: #888; color: #fff; }
+    .nav button:hover    { background: #888; color: #fff; }
     .nav button:disabled { opacity: 0.2; cursor: default; }
 
-    #page-0 {
-      padding: 0;
-      overflow: hidden;
+    /* ── Webcam page ── */
+    #page-0 { padding: 0; overflow: hidden; }
+
+    /* ── Drawing canvas sits on top of page-1 content ── */
+    #page-1 { position: absolute; }
+
+    #drawing-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      /* transparent — content underneath stays visible */
     }
 
     #pen {
@@ -182,162 +169,124 @@
       right: 30%;
     }
   </style>
-
 </head>
 <body>
   <img id="pen" src="https://stationerypal.com/cdn/shop/files/MujiSmoothWritingGelPen0.5mm-Black_2.png?v=1689563610" alt="">
 
   <div class="book">
- 
     <div class="spine"></div>
-   
-    <!-- Add or remove .page divs to change the number of pages -->
-    <!-- Each .page corresponds to one tab in .tabs below -->
-   
+
     <div class="page active" id="page-0"></div>
-   
+
     <div class="page" id="page-1">
-      <!-- Page 2 content -->
+      <!-- Drawing canvas is injected here by p5 — it floats above this content -->
+
       <h1>Week 4</h1>
       <p>Module B: Creative Coding</p>
 
-        <!-- RESEARCH -->
-        <h2>Hunt'n'Gather</h2>
-        <p>Mirror, Mirror: Gather 3 examples of reflection/webcam works.</p>
-        
-        <figure><img src="https://www.designboom.com/twitterimages/uploads/2019/01/handson-facebook-interactive-facial-recognition-book-story-designboom-1200.jpg" alt="">
-        <figcaption>facebook by Lim Si Ping (Handson), 2019</figcaption></figure>
-          <p>facebook' is an interactive installation that uses facial recognition technology to track the reader's personal data through multiple search engines, filling in a narrative template on its back-end to develop, in real time, a story tailored to the individual. It comprises of a physical book and two web cameras, one that tracks the user's page flipping motion, to project new content onto each new spread, and a second which constantly traces their face to derive data to be injected into the story. Depending on the user, details of the storyline will be completely different, including their name, age, occupation, locstion and relationships. Created in "dialogue with big brother", the work examines the role of social media, the digital footprint, data privacy.
-          </p>
-        
-        <figure><img src="https://i0.wp.com/pluginhuman.com/wp-content/uploads/2021/02/PluginHUMAN_Betty-Sargeant_Justin-Dwyer_Real-Time-Art_2.jpg?resize=750%2C463&ssl=1" alt="">
-        <figcaption>[i miss your touch] by PluginHUMAN, 2020</figcaption></figure> 
+      <h2>Hunt'n'Gather</h2>
+      <p>Mirror, Mirror: Gather 3 examples of reflection/webcam works.</p>
+      
+      <figure>
+        <img src="https://www.designboom.com/twitterimages/uploads/2019/01/handson-facebook-interactive-facial-recognition-book-story-designboom-1200.jpg" alt="">
+        <figcaption>facebook by Lim Si Ping (Handson), 2019</figcaption>
+      </figure>
+      <p>facebook' is an interactive installation that uses facial recognition technology to track the reader's personal data through multiple search engines, filling in a narrative template on its back-end to develop, in real time, a story tailored to the individual. It comprises of a physical book and two web cameras, one that tracks the user's page flipping motion, to project new content onto each new spread, and a second which constantly traces their face to derive data to be injected into the story. Depending on the user, details of the storyline will be completely different, including their name, age, occupation, location and relationships. Created in "dialogue with big brother", the work examines the role of social media, the digital footprint, data privacy.</p>
 
-        <figure><img src="https://www.memo.tv/wpmemo/wp-content/uploads/2017/08/MSA_LearningToSee_Barbican2019-8-1024x911.jpg" alt="">
-          <figcaption>Learning to See Series by Memo Atken, Ongoing</figcaption></figure> 
-          <p>An ongoing collection of works that uses machine learning and AI to produce live image interpretations of the real world, through filters of its learned image dataset. The result is these dream-like artistic interpretations of mundane reality, making us question how we make sense of the world, our own consciousness influenced by expectations and existing beliefs. I found the creative and philosophical application of ML and AI especially refreshing, as it urged me to consider future implications of such technology on the way we experience the world.
-          </p>
+      <figure>
+        <img src="https://i0.wp.com/pluginhuman.com/wp-content/uploads/2021/02/PluginHUMAN_Betty-Sargeant_Justin-Dwyer_Real-Time-Art_2.jpg?resize=750%2C463&ssl=1" alt="">
+        <figcaption>[i miss your touch] by PluginHUMAN, 2020</figcaption>
+      </figure>
 
-        <!-- CLASS STUFF -->
-        <h2>Interactivities</h2>
-          <h3>Act_01: Offline Algorithmic Thinking</h3>
-          <!-- intro to p5.js anatomy, basic shapes, colours and cursor drawing -->
-          <h3>Act_02: Let's GO!!!</h3>
-          <!-- primitiveShapes.js -->
+      <figure>
+        <img src="https://www.memo.tv/wpmemo/wp-content/uploads/2017/08/MSA_LearningToSee_Barbican2019-8-1024x911.jpg" alt="">
+        <figcaption>Learning to See Series by Memo Atken, Ongoing</figcaption>
+      </figure>
+      <p>An ongoing collection of works that uses machine learning and AI to produce live image interpretations of the real world, through filters of its learned image dataset. The result is these dream-like artistic interpretations of mundane reality, making us question how we make sense of the world, our own consciousness influenced by expectations and existing beliefs. I found the creative and philosophical application of ML and AI especially refreshing, as it urged me to consider future implications of such technology on the way we experience the world.</p>
 
-        <!-- OTHER STUFF-->
-        <h2>Homework</h2>
-        <p>A couple simple experimental p5.js sketches to familiarise with using Processing.</p>
+      <h2>Interactivities</h2>
+        <h3>Act_01: Offline Algorithmic Thinking</h3>
+        <h3>Act_02: Let's GO!!!</h3>
 
-          <h3>drawSnoopy.js</h3>
+      <h2>Homework</h2>
+      <p>A couple simple experimental p5.js sketches to familiarise with using Processing.</p>
+        <h3>drawSnoopy.js</h3>
 
-        <h2>Workbook Progression</h2>
-
-        <h2>Reflection</h2>
+      <h2>Workbook Progression</h2>
+      <h2>Reflection</h2>
     </div>
-   
+
     <div class="page" id="page-2">
       <h1>Week 5</h1>
       <p>Module B: Creative Coding</p>
 
-      <!-- RESEARCH -->
       <h2>Hunt'n'Gather</h2>
       <p>Find 3 examples of noteworthy 3D generative art → What agency does the user have?</p>
-      
+
         <h3>datamatics by Ryoji Ikeda, 2006</h3>
-        <p>
-        </p>
+        <p></p>
 
         <h3>New Nature by Marpi Studio, 2008</h3>
-        <p>"Inspired by biology, ecology, and the underlying mathematics of the natural world, New Nature is an ever-unfolding digital world of speculative creatures and landscapes." Installed at ARTECHOUSE in Washington, DC, from October 2018 - January 2019, New Nature was a digital world of creatures, powered by complex algorithms to mimic the lifelike behaviours of the natural world. These alien organisms detect and respond to audience interactions including touch, approach and movement. The full exhibition comprised four rooms, surround projections, LED structures, responsive floors and 13 interactive terrarium stations. This inspired me to further examine how digital media can creatively reflect and potentially immortalise aspects of nature.
-        </p>
+        <p>"Inspired by biology, ecology, and the underlying mathematics of the natural world, New Nature is an ever-unfolding digital world of speculative creatures and landscapes." Installed at ARTECHOUSE in Washington, DC, from October 2018 - January 2019, New Nature was a digital world of creatures, powered by complex algorithms to mimic the lifelike behaviours of the natural world. These alien organisms detect and respond to audience interactions including touch, approach and movement. The full exhibition comprised four rooms, surround projections, LED structures, responsive floors and 13 interactive terrarium stations. This inspired me to further examine how digital media can creatively reflect and potentially immortalise aspects of nature.</p>
 
         <h3>Untitled, Bathers Series by Harold Cohen, 1986</h3>
-        <p>
-        </p>
+        <p></p>
 
-      <!-- CLASS STUFF -->
       <h2>Interactivities</h2>
-        <!-- This was midsem break week; we explored networked & commodified data works -->
         <h3>Act_01: So Random</h3>
-        <!-- kusamaInspired.js -->
-
         <h3>Act_02: User Input</h3>
-
         <h3>Act_03: Sentiment & Gesture</h3>
 
-      <!-- OTHER STUFF-->
       <h2>Homework</h2>
-
         <h3>Slave to the Algorithm</h3>
-
         <h3>selfPortrait.js</h3>
-
         <h3>webcamEffects.js</h3>
 
       <h2>Workbook Progression</h2>
-
       <h2>Reflection</h2>
     </div>
-   
+
     <div class="page" id="page-3">
       <!-- Page 4 content goes here -->
     </div>
-   
-    <!-- Add more pages here if needed -->
-   
-    <!-- Tabs — one per page. Update the label text to match your pages -->
+
     <div class="tabs">
-      <button class="tab active" data-page="0"><img id="icon" src="https://cdn-icons-png.flaticon.com/512/42/42943.png" alt=""></button>
-      <button class="tab"        data-page="1"><img id="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/500px-Magnifying_glass_icon.svg.png?_=20130526065603" alt=""></button>
+      <button class="tab active" data-page="0"><img id="icon" src="https://www.pngarts.com/files/10/Camera-Icon-Download-PNG-Image.png" alt=""></button>
+      <button class="tab"        data-page="1"><img id="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/500px-Magnifying_glass_icon.svg.png" alt=""></button>
       <button class="tab"        data-page="2"><img id="icon" src="https://cdn-icons-png.flaticon.com/512/129/129817.png" alt=""></button>
       <button class="tab"        data-page="3"><img id="icon" src="https://www.svgviewer.dev/static-svgs/416289/sparkles.svg" alt=""></button>
-      <!-- Add more tabs here if needed -->
     </div>
-   
-    <!-- Prev / Next navigation -->
+
     <div class="nav">
       <button id="prev" disabled>←</button>
       <button id="next">→</button>
     </div>
-   
   </div>
 
   <script>
+    // ── Page navigation ──
     let current = 0;
     const pages = document.querySelectorAll('.page');
     const tabs  = document.querySelectorAll('.tab');
     const total = pages.length;
-   
+
     function goTo(next) {
       if (next === current || next < 0 || next >= total) return;
-   
       pages[current].classList.remove('active');
       tabs[current].classList.remove('active');
-   
       current = next;
-   
       pages[current].classList.add('active', 'flip-in');
       tabs[current].classList.add('active');
-   
       pages[current].addEventListener('animationend', () => {
         pages[current].classList.remove('flip-in');
       }, { once: true });
-   
       document.getElementById('prev').disabled = current === 0;
       document.getElementById('next').disabled = current === total - 1;
     }
-   
-    // Tab clicks
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => goTo(parseInt(tab.dataset.page)));
-    });
-   
-    // Arrow buttons
+
+    tabs.forEach(tab => tab.addEventListener('click', () => goTo(parseInt(tab.dataset.page))));
     document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
     document.getElementById('next').addEventListener('click', () => goTo(current + 1));
-   
-    // Keyboard arrows
     document.addEventListener('keydown', e => {
       if (e.key === 'ArrowRight') goTo(current + 1);
       if (e.key === 'ArrowLeft')  goTo(current - 1);
@@ -345,29 +294,26 @@
   </script>
 
   <script>
-    // p5.js sketch in instance mode so it draws into cover page rather than taking over the whole window
+    // ── Page 0: webcam with threshold + invert ──
     new p5(function(p) {
       let capture;
-  
+
       p.setup = function() {
-        // Canvas size fits cover page div size
         const page = document.getElementById('page-0');
-        const cnv = p.createCanvas(page.offsetWidth, page.offsetHeight);
+        const cnv  = p.createCanvas(page.offsetWidth, page.offsetHeight);
         cnv.parent('page-0');
-  
         capture = p.createCapture(p.VIDEO);
         capture.size(page.offsetWidth, page.offsetHeight);
         capture.hide();
       };
-  
+
       p.draw = function() {
         p.background(0);
         p.image(capture, 0, 0, p.width, p.height);
         p.filter(p.THRESHOLD);
         p.filter(p.INVERT);
       };
-  
-      // Responsive canvas
+
       p.windowResized = function() {
         const page = document.getElementById('page-0');
         p.resizeCanvas(page.offsetWidth, page.offsetHeight);
@@ -375,32 +321,50 @@
     });
   </script>
 
-<script>
-  // another p5.js sketch in instance mode
-  new p5(function(p) {
+  <script>
+    // ── Page 1: drawing overlay ──
+    // The canvas is transparent so the page content (text, images) shows through.
+    // Hold and drag to draw; stroke weight grows the longer you hold.
+    // Double-click to clear drawings.
+    new p5(function(p) {
+      let pressedDuration = 0;
 
-    p.setup = function() {
-      // Canvas size fits cover page div size
-      const page = document.getElementById('page-1');
-      const cnv = p.createCanvas(page.offsetWidth, page.offsetHeight);
-      cnv.parent('page-1');
-    };
+      p.setup = function() {
+        const page = document.getElementById('page-1');
+        const cnv  = p.createCanvas(page.offsetWidth, page.offsetHeight);
+        cnv.parent('page-1');
 
-    p.draw = function() {
-      p.line(p.mouseX, p.mouseY);
-    };
+        // Float above the page content
+        cnv.style('position', 'absolute');
+        cnv.style('top', '0');
+        cnv.style('left', '0');
+        cnv.style('z-index', '10');
 
-    p.mousePressed = function() {
-      p.background(p.random(256),p.random(256),p.random(256))
-    }
+        p.clear(); // transparent — text and images remain visible underneath
+        p.strokeCap(p.ROUND);
+        p.stroke(30, 30, 30, 180);
+      };
 
-    // Responsive canvas
-    p.windowResized = function() {
-      const page = document.getElementById('page-1');
-      p.resizeCanvas(page.offsetWidth, page.offsetHeight);
-    };
-  });
-</script>
+      p.draw = function() {
+        if (!p.mouseIsPressed) { pressedDuration = 0; return; }
+        pressedDuration++;
+        const weight = p.min(pressedDuration * 0.08, 12);
+        p.strokeWeight(weight);
+        p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+      };
+
+      p.mouseReleased = function() { pressedDuration = 0; };
+
+      // Double-click to clear
+      p.doubleClicked = function() { p.clear(); };
+
+      p.windowResized = function() {
+        const page = document.getElementById('page-1');
+        p.resizeCanvas(page.offsetWidth, page.offsetHeight);
+        p.clear();
+      };
+    });
+  </script>
 
 </body>
 </html>
