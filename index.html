@@ -2,13 +2,18 @@
 <html>
 <head>
     <title>Susan's bag</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
     <style>
+        canvas {
+            z-index: -1;
+        }
         body{
-            background: radial-gradient(white,pink);
-            font-family: "Cabin Sketch";
+            z-index: 1;
+            font-family: "Share Tech Mono";
             font-weight: 400;
             font-style: normal;
+            font-size: 2em;
         }
         .center {
             display: flex;
@@ -28,5 +33,41 @@
         </div>
         <a href="backpack.html"><img src="media/backpack.png" alt="Black backpack"></a>
     </div>
+
+    <script>
+        let offscreen;
+
+function setup() {
+  createCanvas(680, 400);
+  offscreen = createGraphics(680, 400);
+}
+
+function draw() {
+  background(15, 10, 5);
+
+  offscreen.clear();
+  let ctx = offscreen.drawingContext;
+
+  offscreen.background(0, 0, 0, 255);
+
+  let grad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
+  grad.addColorStop(0,    'rgba(0,0,0,0)');
+  grad.addColorStop(0.45, 'rgba(0,0,0,0)');  // fully lit core
+  grad.addColorStop(1,    'rgba(0,0,0,1)');  // total darkness at edge
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, width, height);
+
+  let warmGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 300);
+  warmGrad.addColorStop(0,    'rgba(255,220,100,0.22)');
+  warmGrad.addColorStop(0.35, 'rgba(255,160,40,0.10)');
+  warmGrad.addColorStop(0.65, 'rgba(180,80,10,0.04)');
+  warmGrad.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = warmGrad;
+  ctx.fillRect(0, 0, width, height);
+
+  image(offscreen, 0, 0);
+}
+    </script>
 </body>
 </html>
