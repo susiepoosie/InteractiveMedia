@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 3: Physical Computing</title>
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; width: 100%; overflow: hidden; }
@@ -12,23 +14,27 @@
     body {
       display: flex;
       flex-direction: column;
-      background-color: rgb(255, 97, 155);
+      background-color: rgb(255, 189, 213);
+      font-family: "Quantico", sans-serif;
+      font-weight: 400;
+      font-style: normal;
     }
 
     /* ── Header banner ── */
     .header {
       display: flex;
+      background-color: black;
       justify-content: center;
       align-items: center;
       padding: 1em 3em;
       flex-shrink: 0;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid white;
     }
 
     .banner {
       width: 100%;
       background-color: rgb(122, 140, 131);
-      border: 2px solid black;
+      border: 2px solid rgb(255, 97, 155);
       border-radius: 20px;
       font-family: "Bitcount Single", monospace;
       font-size: clamp(1.2rem, 3vw, 3.5em);
@@ -36,7 +42,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: black;
+      color: white;
     }
 
     /* ── Main content row ── */
@@ -48,6 +54,7 @@
 
     /* ── Left: calculator panel ── */
     .keypad-pane {
+      background-color: rgb(255, 97, 155);
       width: 220px;
       min-width: 220px;
       flex-shrink: 0;
@@ -55,7 +62,7 @@
       flex-direction: column;
       padding: 12px;
       gap: 8px;
-      border-right: 1px solid #000;
+      border-right: 1px solid white;
       height: 100%;
       overflow: hidden;
     }
@@ -114,8 +121,11 @@
     }
 
     .gallery-label {
+      font-family: "Quantico", sans-serif;
+      font-weight: 700;
+      font-style: italic;
       padding: 8px 12px;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid white;
       flex-shrink: 0;
     }
 
@@ -215,7 +225,7 @@
         height: 260px;
         flex-direction: row;
         border-right: none;
-        border-top: 1px solid #000;
+        border-top: 1px solid white;
       }
 
       .keypad-display {
