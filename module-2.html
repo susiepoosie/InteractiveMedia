@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 2: Creative Coding</title>
   <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Gochi+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
   <script language="javascript" type="text/javascript" src="js/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
   <style>
@@ -34,6 +33,33 @@
     h2 {
       font-size: medium;
     }
+
+    .gallery {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+  }
+  .gallery > * {
+    flex: 0 0 300px;
+    aspect-ratio: 1;
+    scroll-snap-align: start;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+  }
+  .caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.7); color: white;
+    padding: 0.5rem; transform: translateY(100%);
+    transition: 0.3s; font-size: 0.8rem;
+  }
+  .gallery-item:hover .caption {
+    transform: translateY(0);
+  }
 
     /* ── Book container ── */
     .book {
@@ -200,7 +226,7 @@
         <!-- CLASS STUFF -->
         <h2>Interactivities</h2>
           <h3>Act_01: Offline Algorithmic Thinking</h3>
-          
+
           <!-- intro to p5.js anatomy, basic shapes, colours and cursor drawing -->
           <h3>Act_02: Let's GO!!!</h3>
           <!-- primitiveShapes.js -->
